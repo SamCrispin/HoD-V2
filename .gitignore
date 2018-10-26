@@ -1,0 +1,15 @@
+**/*.iml
+**/*.ipr
+**/*.iws
+**/.checkstyle
+**/.classpath
+**/.project
+**/.settings
+**/bin
+**/*.idea
+**/target
+**/deployWebApp.ksh
+**/*.springbeans
+**/logs
+**/*.log
+**/.DS_Store
