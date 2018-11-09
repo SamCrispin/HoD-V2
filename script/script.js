@@ -47,8 +47,19 @@ function id(id) {
     return document.getElementById(id);
 }
 
+function setupListenersAttributes() {
+    id("interactionOption1").setAttribute("action", interactions.openingScreen1.options[0].action);
+    id("interactionOption1").setAttribute("parameters", interactions.openingScreen1.options[0].parameters);
+    id("interactionOption1").addEventListener("click", interactionHandler);
+    id("interactionOption2").addEventListener("click", interactionHandler);
+    id("interactionOption3").addEventListener("click", interactionHandler);
+    id("interactionOption4").addEventListener("click", interactionHandler);
+    id("interactionOption5").addEventListener("click", interactionHandler);
+}
+
 function setup() {
-    nav.open("fight");
+    nav.open("interaction");
+    setupListenersAttributes();
 }
 
 window.onload = setup;

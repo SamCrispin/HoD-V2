@@ -37,6 +37,13 @@ body {
    background-color: yellow;
 }
 
+/*Interaction*/
+   .interactionOption {
+      position: relative;
+      padding-left: 30px;
+      margin-top: 20px;
+   }
+
 /*Fight*/
    .fightBannerBg {
       background-color: white;
