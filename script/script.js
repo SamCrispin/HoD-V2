@@ -11,6 +11,12 @@ var player = {
 
     changeHealth: function (health) {
         if (this.health.current == this.health.max && health > 0) return false;
+        player.health.current += health;
+        if (player.health.current > player.health.max) player.health.current = player.health.max;
+        else if (player.health.current <= 0) this.die();
+    },
+
+    die: function () {
 
     }
 };
@@ -21,12 +27,12 @@ var nav = {
 
     open: function(divIdToBeOpened) {
         if (this.openDiv) this.close(this.openDiv);
-        document.getElementById(divIdToBeOpened).style.display = "block";
+        id(divIdToBeOpened).style.display = "block";
         this.openDiv = divIdToBeOpened;
     },
 
     close: function (divIdToBeClosed) {
-        document.getElementById(divIdToBeClosed).style.display = "none";
+        id(divIdToBeClosed).style.display = "none";
         this.lastOpenDiv = divIdToBeClosed;
     },
 
@@ -37,8 +43,12 @@ var nav = {
     }
 };
 
+function id(id) {
+    return document.getElementById(id);
+}
+
 function setup() {
-    nav.open("inventory");
+    nav.open("fight");
 }
 
 window.onload = setup;

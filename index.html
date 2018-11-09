@@ -5,6 +5,7 @@
     <title>HoD V2</title>
     <link rel="stylesheet" href="style/style.css">
     <script src="script/script.js"></script>
+    <script src="script/combatDefinitions.js"></script>
     <script src="script/combat.js"></script>
     <script src="script/interactions.js"></script>
     <script src="script/loot.js"></script>
@@ -15,7 +16,24 @@
         <div id="interaction" class="outputDiv"></div>
         <div id="inventory" class="outputDiv"></div>
         <div id="player" class="outputDiv"></div>
-        <div id="fight" class="outputDiv"></div>
+        <div id="fight" class="outputDiv">
+            <div id="fightBack" onclick="fightBack()"></div>
+            <div class="fightBannerBg" id="fightOpeningBanner">
+                <div id="fightOpeningBannerMessage">Message</div>
+                <div class="fightOption hasHover" id="fightOpeningFightOption" onclick="displayFightOptions()">Fight</div>
+                <div class="fightOption hasHover" id="fightOpeningWeaponsOption" onclick="displayWeapons()">Weapons</div>
+            </div>
+            <div class="fightBannerBg" id="fightMovesBanner">
+                <div class="fightMove hasHover" id="fightMove1">1</div>
+                <div class="fightMove hasHover" id="fightMove2">2</div>
+                <div class="fightMove hasHover" id="fightMove3">3</div>
+                <div class="fightMove hasHover" id="fightMove4">4</div>
+                <div id="fightMoveDescription">Desc</div>
+            </div>
+            <div class="fightBannerBg" id="fightWeaponsBanner"></div>
+            <div class="fightInfo" id="fightEnemyInfo">Enemy info</div>
+            <div class="fightInfo" id="fightPlayerInfo">Player info</div>
+        </div>
         <div id="town" class="outputDiv"></div>
         <div id="shop" class="outputDiv"></div>
         <div id="inn" class="outputDiv"></div>
