@@ -7,7 +7,9 @@ var player = {
     defense: 10,
     charisma: 10,
     gold: 100,
-    inventorySlots: [],
+    itemSlots: [],
+    inventory: [],
+    equipped: [],
 
     changeHealth: function (health) {
         if (this.health.current == this.health.max && health > 0) return false;
@@ -31,12 +33,12 @@ var nav = {
         this.openDiv = divIdToBeOpened;
     },
 
-    close: function (divIdToBeClosed) {
+    close: function(divIdToBeClosed) {
         id(divIdToBeClosed).style.display = "none";
         this.lastOpenDiv = divIdToBeClosed;
     },
 
-    back: function () {
+    back: function() {
         var divToBeOpened = this.lastOpenDiv;
         this.close(this.openDiv);
         this.open(divToBeOpened);
@@ -57,9 +59,27 @@ function setupListenersAttributes() {
     id("interactionOption5").addEventListener("click", interactionHandler);
 }
 
+function setupMoves() {
+    id("fightMoves").addEventListener("mouseover", function() {
+        var triggerDiv = event.target,
+                divId = triggerDiv.id.slice(triggerDiv.id.length - 1);
+        id("fightMoveDescription").innerHTML = player.equipped[0].moves[divId-1].description;
+    });
+    id("fightMoves").addEventListener("mouseout", function() {
+        id("fightMoveDescription").innerHTML = "Select a move"
+    });
+    id("fightMoves").addEventListener("click", function () {
+        var triggerDiv = event.target,
+                moveId = triggerDiv.id.slice(triggerDiv.id.length - 1);
+        fight.attack(player.equipped[0].moves[moveId-1]);
+    });
+}
+
 function setup() {
-    nav.open("interaction");
+    nav.open("fight");
     setupListenersAttributes();
+    player.equipped.push(genWeapon());
+    setupMoves();
 }
 
 window.onload = setup;

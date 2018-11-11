@@ -53,7 +53,7 @@ var types = {
         }
     },
 
-    attacks = {
+    moves = {
         "NORMAL": [
             {
                 name: "Shockwave",
@@ -117,16 +117,25 @@ var types = {
             name: "Health Potion",
             description: "This tonic magically makes all your injuries feel just a little bit better, don't question how it does it..." +
             "or what's in it...",
-            effect: function (health) {
-                player.changeHealth(health)
+            effect: function() {
+                player.changeHealth(20)
             }
         },
 
         slingshot: {
             name: "Slingshot",
             description: "A crudely made slingshot that looks like you'll only get 1 use out of it, regardless of ammo. Just aim and fire",
-            effect: function (damage) {
+            effect: function(damage) {
                 //deal 'damage' worth of damage
             }
         }
     };
+
+function Enemy(name, type, health, attack, defense, moves) {
+    this.name = name;
+    this.type = type;
+    this.health = health;
+    this.attack = attack;
+    this.defense = defense;
+    this.moves = moves;
+}

@@ -1,6 +1,6 @@
 function Weapon(type, moves, attack) {
     this.type = type;
-    this.attacks = moves;
+    this.moves = moves;
     this.attack = attack;
 }
 
@@ -12,7 +12,7 @@ function Item(name, description, effect) {
 
 function genWeapon() {
     var type = getRandomType(),
-        moves = [],
+        thisMoves = [],
         attack = (Math.random() * 10) << 0,
         moveTypes = [type];
 
@@ -20,10 +20,10 @@ function genWeapon() {
         moveTypes.push(getRandomType(moveTypes));
     }
     for (var x in moveTypes) {
-        moves.push(attacks[moveTypes[x]][0])
+        thisMoves.push(moves[moveTypes[x]][0])
     }
-    moves.push(attacks["BARRIER"][0]);
-    return new Weapon(type, moves, attack)
+    thisMoves.push(moves["BARRIER"][0]);
+    return new Weapon(type, thisMoves, attack)
 }
 
 function genItem() {

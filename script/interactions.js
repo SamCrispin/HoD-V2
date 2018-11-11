@@ -4,7 +4,7 @@ var interactions = {
         options: [
             {
                 text: "Option 1",
-                action: openInteraction,
+                action: "openInteraction",
                 parameters: ["openingScreen2"]
             }
         ]
@@ -24,8 +24,9 @@ var interactions = {
 
 function interactionHandler(e) {
     var target = e.target,
-        action = target.getAttribute("action"),
-        parameters = target.getAttribute("parameters").split(",");
+        action = target.getAttribute("action");
+    if (!action) return;
+    var parameters = target.getAttribute("parameters").split(",");
     if (action.includes(".")) {
         action = action.split(".");
         window[action[0]][action[1]](parameters);
