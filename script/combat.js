@@ -21,10 +21,12 @@ var fight = {
 
     enemy: null,
     playersTurn: true,
+    playerBarrier: false,
+    enemyBarrier: false,
 
     setupFight: function(enemy) {
         nav.open("fight");
-        this.enemy = enemy;
+        this.enemy = this.genEnemy(enemy);
         this.setupMoves();
     },
 
@@ -49,6 +51,42 @@ var fight = {
     },
 
     attack: function(move) {
+        var damage;
+        if (this.playersTurn) {
+            if (move.name == "Barrier") {
+                this.playerBarrier = true;
+            } else {
+                damage = (player.attack / this.enemy.defense) * player.attack;
+                damage *= ((effectiveness[move.type][this.enemy.type]) ? effectiveness[move.type][this.enemy.type] : 1);
+                damage = damage << 0;
+                if (this.enemyBarrier) damage /= 2 << 0;
+                this.enemy.health -= damage;
+                this.enemyBarrier = false;
+                if (this.enemy.health <= 0) this.victory();
+            }
+        } else {
+            if (move.name == "Barrier") {
+                this.enemyBarrier = true;
+            } else {
+                damage = (this.enemy.attack / player.defense) * this.enemy.attack;
+                damage *= ((effectiveness[move.type][player.equipped[0].type]) ? effectiveness[move.type][player.equipped[0].type] : 1);
+                damage = damage << 0;
+                if (this.playerBarrier) damage /= 2 << 0;
+                this.playerBarrier = false;
+                player.changeHealth(-damage);
+            }
+        }
+        this.playersTurn = !this.playersTurn;
+        if (!this.playersTurn) this.enemyTurn();
+    },
 
+    enemyTurn: function() {
+        var move = this.enemy.moves[Math.random() * (this.enemy.moves.length-1) << 0];
+        this.attack(move);
+    },
+
+    victory: function() {
+        nav.open("loot");
+        genLoot();
     }
 };
