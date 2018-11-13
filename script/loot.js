@@ -46,3 +46,13 @@ function getRandomType(blackList) {
     } while (!type);
     return type;
 }
+
+function genLoot() {
+    var loot = [];
+
+    loot.push(genWeapon());
+    if (Math.random() < 0.5) loot.push(genItem());
+    loot.push("Gold:" + ((Math.random() * 20 + 10)<<0));
+
+    return loot;
+}

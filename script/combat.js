@@ -10,6 +10,12 @@ function displayWeapons() {
     id ("fightBack").style.display = "block";
 }
 
+function displayMessage(message) {
+    id("fightMovesBanner").style.display = "none";
+    id("fightMessageBanner").innerHTML = message;
+    id("fightMessageBanner").style.display = "block";
+}
+
 function fightBack() {
     id("fightOpeningBanner").style.display = "block";
     id("fightMovesBanner").style.display = "none";
@@ -51,32 +57,59 @@ var fight = {
     },
 
     attack: function(move) {
-        var damage;
+        var damage, message;
         if (this.playersTurn) {
+            message = "You used " + move.name;
             if (move.name == "Barrier") {
+                if (this.playerBarrier) {
+                    message += "<br>The move failed: You already have a barrier up!";
+                }
                 this.playerBarrier = true;
             } else {
                 damage = (player.attack / this.enemy.defense) * player.attack;
-                damage *= ((effectiveness[move.type][this.enemy.type]) ? effectiveness[move.type][this.enemy.type] : 1);
+                if (effectiveness[move.type][this.enemy.type]) {
+                    damage *= effectiveness[move.type][this.enemy.type];
+                    if (effectiveness[move.type][this.enemy.type] > 1) message += "<br>You hit and it was super effective!";
+                    else message += "<br>You hit but it wasn't very effective!";
+                } else {
+                    message += "<br>You hit!";
+                }
+                if (this.enemyBarrier) {
+                    damage /= 2 << 0;
+                    message += "<br>The enemy's barrier mitigated some damage!";
+                }
                 damage = damage << 0;
-                if (this.enemyBarrier) damage /= 2 << 0;
                 this.enemy.health -= damage;
                 this.enemyBarrier = false;
                 if (this.enemy.health <= 0) this.victory();
             }
         } else {
+            message = "The enemy used " + move.name;
             if (move.name == "Barrier") {
+                if (this.enemyBarrier) {
+                    message += "<br>The move failed: The enemy already has a barrier up!";
+                }
                 this.enemyBarrier = true;
             } else {
                 damage = (this.enemy.attack / player.defense) * this.enemy.attack;
-                damage *= ((effectiveness[move.type][player.equipped[0].type]) ? effectiveness[move.type][player.equipped[0].type] : 1);
+                if (effectiveness[move.type][player.equipped[0].type]) {
+                    damage *= effectiveness[move.type][player.equipped[0].type];
+                    if (effectiveness[move.type][player.equipped[0].type] > 1) message += "<br>You were hit and it was super effective!";
+                    else message += "<br>You were hit but it wasn't very effective!";
+                } else {
+                    message += "<br>You were hit";
+                }
+                if (this.playerBarrier) {
+                    damage /= 2 << 0;
+                    message += "<br>Your barrier mitigated some damage!";
+                }
                 damage = damage << 0;
-                if (this.playerBarrier) damage /= 2 << 0;
                 this.playerBarrier = false;
                 player.changeHealth(-damage);
             }
         }
         this.playersTurn = !this.playersTurn;
+        displayMessage(message);
         if (!this.playersTurn) this.enemyTurn();
     },
 
