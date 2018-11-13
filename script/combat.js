@@ -30,9 +30,9 @@ var fight = {
     playerBarrier: false,
     enemyBarrier: false,
 
-    setupFight: function(enemy) {
+    setupFight: function(enemy, type) {
         nav.open("fight");
-        this.enemy = this.genEnemy(enemy);
+        this.enemy = this.genEnemy(enemy, type);
         this.setupMoves();
     },
 

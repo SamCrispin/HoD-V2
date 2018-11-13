@@ -14,9 +14,8 @@ var interactions = {
         options: [
             {
                 text: "Option 1",
-                action: null,
-                blue: false,
-                parameters: ["fight"]
+                action: "fight.setupFight",
+                parameters: ["Big Enemy", types.ARCANE]
             }
         ]
     }
@@ -29,7 +28,7 @@ function interactionHandler(e) {
     var parameters = target.getAttribute("parameters").split(",");
     if (action.includes(".")) {
         action = action.split(".");
-        window[action[0]][action[1]](parameters);
+        window[action[0]][action[1]](parameters[0], parameters[1]);
     } else {
         window[action](parameters);
     }

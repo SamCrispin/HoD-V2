@@ -20,6 +20,10 @@ var player = {
 
     die: function () {
 
+    },
+
+    changeGold: function (gold) {
+        this.gold += gold;
     }
 };
 
@@ -49,7 +53,7 @@ function id(id) {
     return document.getElementById(id);
 }
 
-function setupListenersAttributes() {
+function setupInteractionFunctions() {
     id("interactionOption1").setAttribute("action", interactions.openingScreen1.options[0].action);
     id("interactionOption1").setAttribute("parameters", interactions.openingScreen1.options[0].parameters);
     id("interactionOption1").addEventListener("click", interactionHandler);
@@ -75,11 +79,16 @@ function setupMoves() {
     });
 }
 
+function setupLoot() {
+    id("lootItemContainer").addEventListener("click", pickupLoot)
+}
+
 function setup() {
-    nav.open("fight");
-    setupListenersAttributes();
+    nav.open("interaction");
+    setupInteractionFunctions();
     player.equipped.push(genWeapon());
     setupMoves();
+    setupLoot();
 }
 
 window.onload = setup;

@@ -1,3 +1,5 @@
+var loot;
+
 function Weapon(type, moves, attack) {
     this.type = type;
     this.moves = moves;
@@ -48,11 +50,50 @@ function getRandomType(blackList) {
 }
 
 function genLoot() {
-    var loot = [];
+    loot = [];
 
-    loot.push(genWeapon());
-    if (Math.random() < 0.5) loot.push(genItem());
-    loot.push("Gold:" + ((Math.random() * 20 + 10)<<0));
+    loot.push({
+        type: "weapon",
+        value: genWeapon()
+    });
+    if (Math.random() < 0.5) {
+        loot.push({
+            type: "item",
+            value: genItem()
+        });
+    }
+    loot.push({
+        type: "gold",
+        value: (Math.random() * 20 + 10) << 0
+    });
 
-    return loot;
+    var bgImage, output, div;
+    for (var item in loot) {
+        output = "";
+        switch (loot[item].type) {
+            case "weapon":
+                bgImage = "../img/weapon.png";
+                output += loot[item].value.type + "<br>"
+                        + loot[item].value.moves[1].name + "<br>"
+                        + loot[item].value.moves[2].name + "<br>"
+                        + loot[item].value.attack;
+                break;
+            case "item":
+                bgImage = "../img/png.png";
+                output += loot[item].value.name + "<br>"
+                        + loot[item].value.description;
+                break;
+            case "gold":
+                bgImage = "../img/gold.png";
+                output += loot[item].value
+                        + " Gold";
+                break;
+        }
+        div = document.createElement("div");
+        div.className = "lootItem";
+        div.id = "lootItem" + item;
+        div.style.backgroundImage = bgImage;
+        div.innerHTML = output;
+        id("lootItemContainer").appendChild(div);
+    }
 }

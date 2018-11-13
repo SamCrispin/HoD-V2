@@ -44,6 +44,10 @@ body {
       margin-top: 20px;
    }
 
+/*Inventory*/
+
+/*Player*/
+
 /*Fight*/
    .fightBannerBg {
       background-color: white;
@@ -169,3 +173,33 @@ body {
          border-top: 10px solid white;
          width: 620px;
       }
+
+/*Loot*/
+   #lootItemContainer {
+      overflow-y: scroll;
+   }
+
+   #lootItemContainer::-webkit-scrollbar {
+      display: none;
+   }
+
+   .lootItem {
+      background: no-repeat left;
+      height: 100px;
+      width: 200px;
+      border: 5px solid white;
+      border-radius: 5px;
+      padding-left: 100px;
+      margin-left: 145px;
+      margin-bottom: 10px;
+   }
+
+   .lootItem:hover {
+      border-color: yellow;
+   }
+
+/*Town*/
+
+/*Shop*/
+
+/*Inn*/
