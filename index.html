@@ -10,6 +10,7 @@
     <script src="script/interactions.js"></script>
     <script src="script/loot.js"></script>
     <script src="script/inventory.js"></script>
+    <script src="script/shop.js"></script>
 </head>
 
 <body>
@@ -42,21 +43,18 @@
             </div>
             <div class="fightBannerBg" id="fightWeaponsBanner"></div>
             <div class="fightBannerBg" id="fightMessageBanner"></div>
-            <div class="fightInfo" id="fightEnemyInfo">
-                <div class="fightName" id="fightNameEnemy"></div>
+            <div class="fightInfo" id="fightInfoEnemy">
+                <div class="fightName" id="fightNameEnemy">Name</div>
                 <div class="fightTypeIcon" id="fightTypeIconEnemy"></div>
-                <div class="fightMoveLabel" id="fightMoveLabelEnemy1"></div>
-                <div class="fightMoveLabel" id="fightMoveLabelEnemy2"></div>
+                <div class="fightMoveLabel" id="fightMoveLabelEnemy1">Move 1</div>
+                <div class="fightMoveLabel fightMoveLabel2" id="fightMoveLabelEnemy2">Move 2</div>
                 <div class="fightHealthBarBg">
                     <div class="fightHealthBar" id="fightHealthBarEnemy"></div>
                 </div>
-                <div class="fightHealthLabel" id="fightHealthLabelEnemy"></div>
             </div>
-            <div class="fightInfo" id="fightPlayerInfo">
-                <div class="fightName" id="fightNamePlayer"></div>
+            <div class="fightInfo" id="fightInfoPlayer">
+                <div class="fightName" id="fightNamePlayer">Player</div>
                 <div class="fightTypeIcon" id="fightTypeIconPlayer"></div>
-                <div class="fightMoveLabel" id="fightMoveLabelPlayer1"></div>
-                <div class="fightMoveLabel" id="fightMoveLabelPlayer2"></div>
                 <div class="fightHealthBarBg">
                     <div class="fightHealthBar" id="fightHealthBarPlayer"></div>
                 </div>
@@ -66,8 +64,14 @@
         <div id="loot" class="outputDiv">
             <div id="lootItemContainer"></div>
         </div>
-        <div id="town" class="outputDiv"></div>
-        <div id="shop" class="outputDiv"></div>
+        <div id="shop" class="outputDiv">
+            <div id="shopWelcome">Welcome to the shop</div>
+            <div id="shopWeaponContainer"></div>
+            <div id="shopItemContainer"></div>
+            <div id="shopItemDescription"></div>
+            <div id="shopSeparator1"></div>
+            <div id="shopSeparator2"></div>
+        </div>
         <div id="inn" class="outputDiv"></div>
     </div>
 </body>

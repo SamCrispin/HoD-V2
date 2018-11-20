@@ -34,12 +34,16 @@ var fight = {
         nav.open("fight");
         this.enemy = this.genEnemy(enemy, type);
         this.setupMoves();
+        id("fightTypeIconEnemy").style.backgroundImage = "url(img/" + this.enemy.type + ".png)";
+        id("fightTypeIconPlayer").style.backgroundImage = "url(img/" + player.equipped[0].type + ".png)";
     },
 
     setupMoves: function() {
         for (var i = 0; i < 4; i++) {
             id("fightMove" + (i+1)).innerHTML = player.equipped[0].moves[i].name;
         }
+        id("fightMoveLabelEnemy1").innerHTML = this.enemy.moves[0].name;
+        id("fightMoveLabelEnemy2").innerHTML = this.enemy.moves[1].name;
     },
 
     genEnemy: function(name, type) {
@@ -79,9 +83,10 @@ var fight = {
                     message += "<br>The enemy's barrier mitigated some damage!";
                 }
                 damage = damage << 0;
-                this.enemy.health -= damage;
+                this.enemy.health.current -= damage;
                 this.enemyBarrier = false;
-                if (this.enemy.health <= 0) this.victory();
+                id("fightHealthBarEnemy").style.width = ((this.enemy.health.current / this.enemy.health.max) * 100) + "%";
+                if (this.enemy.health.current <= 0) this.victory();
             }
         } else {
             message = "The enemy used " + move.name;

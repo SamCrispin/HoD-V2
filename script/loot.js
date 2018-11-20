@@ -15,7 +15,7 @@ function Item(name, description, effect) {
 function genWeapon() {
     var type = getRandomType(),
         thisMoves = [],
-        attack = (Math.random() * 10) << 0,
+        attack = (Math.random() * 5 + 5) << 0,
         moveTypes = [type];
 
     for (var i = 0; i < 2; i++) {
@@ -25,13 +25,19 @@ function genWeapon() {
         thisMoves.push(moves[moveTypes[x]][0])
     }
     thisMoves.push(moves["BARRIER"][0]);
-    return new Weapon(type, thisMoves, attack)
+    return {
+        type: "weapon",
+        value: new Weapon(type, thisMoves, attack)
+    }
 }
 
 function genItem() {
     var keys = Object.keys(items), item;
     item = items[keys[(Math.random() * keys.length) << 0]];
-    return new Item(item.name, item.description, item.effect);
+    return {
+        type: "item",
+        value: new Item(item.name, item.description, item.effect)
+    };
 }
 
 function getRandomType(blackList) {
@@ -52,15 +58,9 @@ function getRandomType(blackList) {
 function genLoot() {
     loot = [];
 
-    loot.push({
-        type: "weapon",
-        value: genWeapon()
-    });
+    loot.push(genWeapon());
     if (Math.random() < 0.5) {
-        loot.push({
-            type: "item",
-            value: genItem()
-        });
+        loot.push(genItem());
     }
     loot.push({
         type: "gold",
@@ -90,7 +90,7 @@ function genLoot() {
                 break;
         }
         div = document.createElement("div");
-        div.className = "lootItem";
+        div.className = "lootItem hasHoverBorder";
         div.id = "lootItem" + item;
         div.style.backgroundImage = bgImage;
         div.innerHTML = output;

@@ -134,7 +134,10 @@ var types = {
 function Enemy(name, type, health, attack, defense, moves) {
     this.name = name;
     this.type = type;
-    this.health = health;
+    this.health = {
+        max: health,
+        current: health
+    };
     this.attack = attack;
     this.defense = defense;
     this.moves = moves;
