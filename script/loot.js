@@ -96,4 +96,5 @@ function genLoot() {
         div.innerHTML = output;
         id("lootItemContainer").appendChild(div);
     }
+    nav.open("loot");
 }

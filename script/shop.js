@@ -87,6 +87,6 @@ function itemHover(e) {
     id("shopItemDescription").innerHTML = output;
 }
 
-function clearShopHover(e) {
+function clearShopHover() {
     id("shopItemDescription").innerHTML = "Hover over an item to get more information";
 }

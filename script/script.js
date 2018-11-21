@@ -94,9 +94,9 @@ function setupListenersAndAttributes() {
 }
 
 function setup() {
-    nav.open("shop");
-    populateShop();
-    player.equipped.push(genWeapon());
+    nav.open("interaction");
+    openInteraction("startingScreen2");
+    player.equipped.push(genWeapon().value);
     setupListenersAndAttributes();
 }
 

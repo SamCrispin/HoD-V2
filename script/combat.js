@@ -124,7 +124,6 @@ var fight = {
     },
 
     victory: function() {
-        nav.open("loot");
         genLoot();
     }
 };
