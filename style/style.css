@@ -41,6 +41,19 @@ body {
    border-color: yellow;
 }
 
+.item {
+   height: 100px;
+   width: 100px;
+   display: inline-block;
+   position: relative;
+   top: 5px;
+   left: 5px;
+   border: 5px solid white;
+   border-radius: 10px;
+   margin-right: 10px;
+   margin-bottom: 7px;
+}
+
 /*Interaction*/
    .interactionOption {
       position: relative;
@@ -263,22 +276,8 @@ body {
       top: -5px;
    }
 
-   .shopEquipment {
-      height: 100px;
-      width: 100px;
-      display: inline-block;
-      position: relative;
-      top: 5px;
-      left: 5px;
-      border: 5px solid white;
-      border-radius: 10px;
-      margin-right: 10px;
-   }
-
    .shopPrice {
       width: 120px;
-      position: relative;
-      top: 5px;
       text-align: center;
       display: inline-block;
    }

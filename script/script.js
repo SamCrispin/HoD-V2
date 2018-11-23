@@ -70,7 +70,7 @@ function setupListenersAndAttributes() {
     id("fightMoves").addEventListener("mouseover", function() {
         var triggerDiv = event.target,
                 divId = triggerDiv.id.slice(triggerDiv.id.length - 1);
-        id("fightMoveDescription").innerHTML = player.equipped[0].moves[divId-1].description;
+        id("fightMoveDescription").innerHTML = player.equipped[0].value.moves[divId-1].description;
     });
     id("fightMoves").addEventListener("mouseout", function() {
         id("fightMoveDescription").innerHTML = "Select a move"
@@ -78,7 +78,7 @@ function setupListenersAndAttributes() {
     id("fightMoves").addEventListener("click", function () {
         var triggerDiv = event.target,
                 moveId = triggerDiv.id.slice(triggerDiv.id.length - 1);
-        fight.attack(player.equipped[0].moves[moveId-1]);
+        fight.attack(player.equipped[0].value.moves[moveId-1]);
     });
 
     //Loot
@@ -91,16 +91,23 @@ function setupListenersAndAttributes() {
     id("shopItemContainer").addEventListener("click", buyItem);
     id("shopItemContainer").addEventListener("mouseover", itemHover);
     id("shopItemContainer").addEventListener("mouseout", clearShopHover);
+
+    //Inventory
+    id("inventoryItemContainer").addEventListener("click", equipItem);
 }
 
 function setup() {
-    nav.open("shop");
-    populateShop("Armour");
-    //genLoot();
-    //openInteraction("openingScreen2");
-    player.equipped.push(genWeapon().value);
-    //openInteraction("startingScreen1");
-    //fight.setupFight();
+    nav.open("inventory");
+    player.inventory.push(genWeapon());
+    player.inventory.push(genWeapon());
+    player.inventory.push(genWeapon());
+    player.inventory.push(genWeapon());
+    player.inventory.push(genArmour());
+    player.inventory.push(genArmour());
+    player.inventory.push(genArmour());
+    player.inventory.push(genArmour());
+    populateInventory("weapon");
+    player.equipped[5] = genWeapon();
     setupListenersAndAttributes();
 }
 

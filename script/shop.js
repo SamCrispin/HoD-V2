@@ -7,7 +7,7 @@ function populateShop(type) {
         equipment.value.cost = ((Math.random()*10 +45)<<0);
         shopEquipment.push(equipment);
         div = document.createElement("div");
-        div.className = "shopEquipment hasHoverBorder";
+        div.className = "item hasHoverBorder";
         div.id = "shop" + type + i;
         div.style.backgroundImage = "url(img/" + equipment.value.type + ".png)";
         id("shopEquipmentContainer").appendChild(div);

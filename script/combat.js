@@ -79,7 +79,7 @@ var fight = {
                     message += "<br>You hit!";
                 }
                 if (this.enemyBarrier) {
-                    damage /= 2 << 0;
+                    damage /= 2;
                     message += "<br>The enemy's barrier mitigated some damage!";
                 }
                 damage = damage << 0;
@@ -105,7 +105,7 @@ var fight = {
                     message += "<br>You were hit";
                 }
                 if (this.playerBarrier) {
-                    damage /= 2 << 0;
+                    damage /= 2;
                     message += "<br>Your barrier mitigated some damage!";
                 }
                 damage = damage << 0;
