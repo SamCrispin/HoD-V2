@@ -58,8 +58,8 @@ function id(id) {
 
 function setupListenersAndAttributes() {
     //Interactions
-    id("interactionOption1").setAttribute("action", interactions.openingScreen1.options[0].action);
-    id("interactionOption1").setAttribute("parameters", interactions.openingScreen1.options[0].parameters);
+    id("interactionOption1").setAttribute("action", interactions.startingScreen1.options[0].action);
+    id("interactionOption1").setAttribute("parameters", interactions.startingScreen1.options[0].parameters);
     id("interactionOption1").addEventListener("click", interactionHandler);
     id("interactionOption2").addEventListener("click", interactionHandler);
     id("interactionOption3").addEventListener("click", interactionHandler);
@@ -85,18 +85,22 @@ function setupListenersAndAttributes() {
     id("lootItemContainer").addEventListener("click", pickupLoot);
 
     //Shop
-    id("shopWeaponContainer").addEventListener("click", buyWeapon);
-    id("shopWeaponContainer").addEventListener("mouseover", weaponHover);
-    id("shopWeaponContainer").addEventListener("mouseout", clearShopHover);
+    id("shopEquipmentContainer").addEventListener("click", buyWeapon);
+    id("shopEquipmentContainer").addEventListener("mouseover", equipmentHoverHandler);
+    id("shopEquipmentContainer").addEventListener("mouseout", clearShopHover);
     id("shopItemContainer").addEventListener("click", buyItem);
     id("shopItemContainer").addEventListener("mouseover", itemHover);
     id("shopItemContainer").addEventListener("mouseout", clearShopHover);
 }
 
 function setup() {
-    nav.open("interaction");
-    openInteraction("startingScreen2");
+    nav.open("shop");
+    populateShop("Armour");
+    //genLoot();
+    //openInteraction("openingScreen2");
     player.equipped.push(genWeapon().value);
+    //openInteraction("startingScreen1");
+    //fight.setupFight();
     setupListenersAndAttributes();
 }
 

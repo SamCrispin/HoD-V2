@@ -14,8 +14,15 @@ function pushItemToInventory(item) {
             //pickup item
             player.itemSlots.push(item.value);
             break;
+        case "armour":
+            player.inventory.push(item.value);
+            break;
         case "gold":
             player.changeGold(item.value);
             break;
     }
+}
+
+function populateInventory() {
+
 }

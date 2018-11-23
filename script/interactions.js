@@ -7,7 +7,7 @@ var interactions = {
             {
                 text: "Continue",
                 action: "openInteraction",
-                parameters: ["openingScreen2"]
+                parameters: ["startingScreen2"]
             }
         ]
     },
@@ -131,8 +131,8 @@ function interactionHandler(e) {
     }
 }
 
-function openInteraction(parameters /*interactionId*/) {
-    var interaction = interactions[parameters[0]];
+function openInteraction(interactionId) {
+    var interaction = interactions[interactionId];
     id("interactionOutput").innerHTML = interaction.text;
     for (var i = 1; i < 6; i++) {
         if (interaction.options[i-1]) assignAttributes(i, interaction)

@@ -12,6 +12,12 @@ function Item(name, description, effect) {
     this.effect = effect;
 }
 
+function Armour(type, piece, defense) {
+    this.type = type;
+    this.piece = piece;
+    this.defense = defense;
+}
+
 function genWeapon() {
     var type = getRandomType(),
         thisMoves = [],
@@ -40,6 +46,16 @@ function genItem() {
     };
 }
 
+function genArmour() {
+    var type = getRandomType(),
+        piece = getRandomArmourPiece(),
+        defense = (Math.random() * 5 + 5) << 0;
+    return {
+        type: "armour",
+        value: new Armour(type, piece, defense)
+    }
+}
+
 function getRandomType(blackList) {
     var keys = Object.keys(types),
         type;
@@ -55,13 +71,17 @@ function getRandomType(blackList) {
     return type;
 }
 
+function getRandomArmourPiece() {
+    var keys = Object.keys(armourPieces);
+    return armourPieces[keys[(Math.random() * keys.length) << 0]];
+}
+
 function genLoot() {
     loot = [];
 
     loot.push(genWeapon());
-    if (Math.random() < 0.5) {
-        loot.push(genItem());
-    }
+    if (Math.random() < 0.5) loot.push(genItem());
+    if (Math.random() < 0.5) loot.push(genArmour());
     loot.push({
         type: "gold",
         value: (Math.random() * 20 + 10) << 0
@@ -72,19 +92,25 @@ function genLoot() {
         output = "";
         switch (loot[item].type) {
             case "weapon":
-                bgImage = "../img/weapon.png";
+                bgImage = "img/weapon.png";
                 output += loot[item].value.type + "<br>"
                         + loot[item].value.moves[1].name + "<br>"
                         + loot[item].value.moves[2].name + "<br>"
                         + loot[item].value.attack;
                 break;
             case "item":
-                bgImage = "../img/png.png";
+                bgImage = "img/" + loot[item].value.name + ".png";
                 output += loot[item].value.name + "<br>"
                         + loot[item].value.description;
                 break;
+            case "armour":
+                bgImage = "img/" + loot[item].value.name + ".png";
+                output += loot[item].value.piece + "<br>"
+                        + loot[item].value.type + "<br>"
+                        + loot[item].value.defense;
+                break;
             case "gold":
-                bgImage = "../img/gold.png";
+                bgImage = "img/gold.png";
                 output += loot[item].value
                         + " Gold";
                 break;

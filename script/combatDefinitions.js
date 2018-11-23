@@ -129,6 +129,14 @@ var types = {
                 //deal 'damage' worth of damage
             }
         }
+    },
+
+    armourPieces = {
+        HELMET: "HELMET",
+        AMULET: "AMULET",
+        CHESTPIECE: "CHESTPIECE",
+        LEGGINGS: "LEGGINGS",
+        BOOTS: "BOOTS"
     };
 
 function Enemy(name, type, health, attack, defense, moves) {
