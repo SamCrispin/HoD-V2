@@ -32,7 +32,7 @@ function genWeapon() {
     }
     thisMoves.push(moves["BARRIER"][0]);
     return {
-        type: "weapon",
+        type: "WEAPON",
         value: new Weapon(type, thisMoves, attack)
     }
 }
@@ -41,7 +41,7 @@ function genItem() {
     var keys = Object.keys(items), item;
     item = items[keys[(Math.random() * keys.length) << 0]];
     return {
-        type: "item",
+        type: "ITEM",
         value: new Item(item.name, item.description, item.effect)
     };
 }
@@ -51,7 +51,7 @@ function genArmour() {
         piece = getRandomArmourPiece(),
         defense = (Math.random() * 5 + 5) << 0;
     return {
-        type: "armour",
+        type: "ARMOUR",
         value: new Armour(type, piece, defense)
     }
 }

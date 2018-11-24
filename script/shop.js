@@ -64,7 +64,7 @@ function buyItem(e) {
     }
 }
 
-function equipmentHoverHandler(e) {
+function shopEquipmentHoverHandler(e) {
     var id = e.target.id;
     if (id.slice(4, id.length-1) == "Armour") armourHover(e);
     else if (id.slice(4, id.length-1) == "Weapon") weaponHover(e);
@@ -99,6 +99,6 @@ function itemHover(e) {
     id("shopItemDescription").innerHTML = output;
 }
 
-function clearShopHover() {
+function shopClearHover() {
     id("shopItemDescription").innerHTML = "Hover over an item to get more information";
 }

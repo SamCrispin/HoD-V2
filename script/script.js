@@ -86,27 +86,28 @@ function setupListenersAndAttributes() {
 
     //Shop
     id("shopEquipmentContainer").addEventListener("click", buyWeapon);
-    id("shopEquipmentContainer").addEventListener("mouseover", equipmentHoverHandler);
-    id("shopEquipmentContainer").addEventListener("mouseout", clearShopHover);
+    id("shopEquipmentContainer").addEventListener("mouseover", shopEquipmentHoverHandler);
+    id("shopEquipmentContainer").addEventListener("mouseout", shopClearHover);
     id("shopItemContainer").addEventListener("click", buyItem);
     id("shopItemContainer").addEventListener("mouseover", itemHover);
-    id("shopItemContainer").addEventListener("mouseout", clearShopHover);
+    id("shopItemContainer").addEventListener("mouseout", shopClearHover);
 
     //Inventory
     id("inventoryItemContainer").addEventListener("click", equipItem);
+
+    //Player
+    id("playerOption").addEventListener("click", openInventory);
+    id("playerOption").addEventListener("mouseover", playerHoverHandler);
+    id("playerOption").addEventListener("mouseout", playerClearHover);
 }
 
 function setup() {
-    nav.open("inventory");
-    player.inventory.push(genWeapon());
-    player.inventory.push(genWeapon());
-    player.inventory.push(genWeapon());
-    player.inventory.push(genWeapon());
-    player.inventory.push(genArmour());
-    player.inventory.push(genArmour());
-    player.inventory.push(genArmour());
-    player.inventory.push(genArmour());
-    populateInventory("weapon");
+    nav.open("player");
+    player.equipped[0] = new Armour(types.ARCANE, armourPieces.HELMET, 5);
+    player.equipped[1] = new Armour(types.ICE, armourPieces.AMULET, 5);
+    player.equipped[2] = new Armour(types.ELECTRIC, armourPieces.CHESTPIECE, 5);
+    player.equipped[3] = new Armour(types.FIRE, armourPieces.LEGGINGS, 5);
+    player.equipped[4] = new Armour(types.WATER, armourPieces.BOOTS, 5);
     player.equipped[5] = genWeapon();
     setupListenersAndAttributes();
 }

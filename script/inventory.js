@@ -9,14 +9,14 @@ function pickupLoot(e) {
 
 function pushItemToInventory(item) {
     switch (item.type) {
-        case "weapon":
+        case "WEAPON":
             player.inventory.push(item.value);
             break;
-        case "item":
+        case "ITEM":
             //pickup item
             player.itemSlots.push(item.value);
             break;
-        case "armour":
+        case "ARMOUR":
             player.inventory.push(item.value);
             break;
         case "gold":
@@ -48,10 +48,10 @@ function equipItem(e) {
         item = inventoryItems[id.slice(id.length-1)],
         inventoryItem,
         keys = Object.keys(armourPieces), i;
-    if (item.type == "weapon") {
+    if (item.type == "WEAPON") {
         inventoryItem = player.equipped[5];
         player.equipped[5] = item;
-    } else if (item.type = "armour") {
+    } else if (item.type = "ARMOUR") {
         inventoryItem = player.equipped[keys.indexOf(item.value.piece)];
         player.equipped[keys.indexOf(item.value.piece)] = item;
     }
@@ -67,4 +67,39 @@ function equipItem(e) {
     }
     player.inventory.push(inventoryItem);
     populateInventory(item.type);
+}
+
+function openInventory(e) {
+    var id = e.target.id,
+        inventory = id.slice(6).toUpperCase();
+    nav.open("inventory");
+    populateInventory(inventory);
+}
+
+function playerHoverHandler(e) {
+    var id = e.target.id,
+        key = id.slice(6);
+    if (key == "Weapon") playerWeaponHover();
+    else if (Object.keys(armourPieces).includes(key.toUpperCase())) playerArmourHover(key.toUpperCase());
+}
+
+function playerArmourHover(key) {
+    var armour = player.equipped[Object.keys(armourPieces).indexOf(key)];
+    id("playerItemHover").innerHTML = armour.type + "<br>"
+            + armour.value.defense;
+}
+
+function playerWeaponHover() {
+    var weapon = player.equipped[5],
+        output = "Moves:<br>";
+    if (!weapon) return;
+    for (var i = 0; i < 4; i++) {
+        output += weapon.moves[i].name + "<br>";
+    }
+    output += "Attack: " + weapon.attack;
+    id("playerItemHover").innerHTML = output;
+}
+
+function playerClearHover() {
+    id("playerItemHover").innerHTML = "Hover over an option to get more information";
 }
