@@ -1,1 +1,6 @@
 Append message and make it scrollable
+
+'?' will be caves with '?' in it
+Have 3 images underneath the div which contain the paths
+Have a list of items of that type when hovered over on the player screen
+List equipped items without having to hover over them

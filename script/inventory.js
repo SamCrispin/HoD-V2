@@ -76,7 +76,7 @@ function openInventory(e) {
     populateInventory(inventory);
 }
 
-function playerHoverHandler(e) {
+function playerMouseOverHandler(e) {
     var id = e.target.id,
         key = id.slice(6);
     if (key == "Weapon") playerWeaponHover();
@@ -85,7 +85,7 @@ function playerHoverHandler(e) {
 
 function playerArmourHover(key) {
     var armour = player.equipped[Object.keys(armourPieces).indexOf(key)];
-    id("playerItemHover").innerHTML = armour.type + "<br>"
+    id("playerItemHover").innerHTML = armour.value.type + "<br>"
             + armour.value.defense;
 }
 
@@ -94,12 +94,12 @@ function playerWeaponHover() {
         output = "Moves:<br>";
     if (!weapon) return;
     for (var i = 0; i < 4; i++) {
-        output += weapon.moves[i].name + "<br>";
+        output += weapon.value.moves[i].name + "<br>";
     }
-    output += "Attack: " + weapon.attack;
+    output += "Attack: " + weapon.value.attack;
     id("playerItemHover").innerHTML = output;
 }
 
-function playerClearHover() {
+function playerMouseOutHandler() {
     id("playerItemHover").innerHTML = "Hover over an option to get more information";
 }

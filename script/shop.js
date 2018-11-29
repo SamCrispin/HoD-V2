@@ -64,7 +64,7 @@ function buyItem(e) {
     }
 }
 
-function shopEquipmentHoverHandler(e) {
+function shopEquipmentMouseOverHandler(e) {
     var id = e.target.id;
     if (id.slice(4, id.length-1) == "Armour") armourHover(e);
     else if (id.slice(4, id.length-1) == "Weapon") weaponHover(e);
@@ -89,7 +89,7 @@ function weaponHover(e) {
     id("shopItemDescription").innerHTML = output;
 }
 
-function itemHover(e) {
+function shopItemMouseOverHandler(e) {
     var triggerDiv = e.target,
         item = shopItems[triggerDiv.id.slice(triggerDiv.id.length - 1)],
         output = "";
@@ -99,6 +99,6 @@ function itemHover(e) {
     id("shopItemDescription").innerHTML = output;
 }
 
-function shopClearHover() {
+function shopMouseOutHandler() {
     id("shopItemDescription").innerHTML = "Hover over an item to get more information";
 }

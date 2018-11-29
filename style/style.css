@@ -381,3 +381,22 @@ body {
 /*Inn*/
 
 /*Map*/
+   #map {
+      overflow-y: scroll;
+   }
+
+   #map::-webkit-scrollbar {
+      display: none;
+   }
+
+   .mapCell {
+      height: 40px;
+      width: 40px;
+      position: absolute;
+   }
+
+   .mapImg {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+   }
