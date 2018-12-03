@@ -3,21 +3,25 @@ var inventoryItems = [];
 function pickupLoot(e) {
     var triggerDiv = e.target,
         item = loot.splice(triggerDiv.id.slice(triggerDiv.id.length - 1), 1, null)[0];
-    pushItemToInventory(item);
+    if (!pushItemToInventory(item)) {
+        triggerDiv.style.borderColor = "red";
+        setTimeout(function() {triggerDiv.style.borderColor = "white";}, 100);
+    }
     id("lootItemContainer").removeChild(triggerDiv);
 }
 
 function pushItemToInventory(item) {
     switch (item.type) {
         case "WEAPON":
-            player.inventory.push(item.value);
+            player.inventory.push(item);
             break;
         case "ITEM":
-            //pickup item
-            player.itemSlots.push(item.value);
+            if (player.itemSlots.length == 3) return false;
+            var index = player.itemSlots.push(item);
+            id("hudItemSlot" + index).style.backgroundImage = "url(img/" + item.value.name.toLowerCase() + ".png)";
             break;
         case "ARMOUR":
-            player.inventory.push(item.value);
+            player.inventory.push(item);
             break;
         case "gold":
             player.changeGold(item.value);

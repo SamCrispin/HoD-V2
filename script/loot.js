@@ -91,26 +91,26 @@ function genLoot() {
     for (var item in loot) {
         output = "";
         switch (loot[item].type) {
-            case "weapon":
-                bgImage = "img/weapon.png";
+            case "WEAPON":
+                bgImage = "url(img/staff.png)";
                 output += loot[item].value.type + "<br>"
                         + loot[item].value.moves[1].name + "<br>"
                         + loot[item].value.moves[2].name + "<br>"
                         + loot[item].value.attack;
                 break;
-            case "item":
-                bgImage = "img/" + loot[item].value.name + ".png";
+            case "ITEM":
+                bgImage = "url(img/" + loot[item].value.name.toLowerCase() + ".png)";
                 output += loot[item].value.name + "<br>"
                         + loot[item].value.description;
                 break;
-            case "armour":
-                bgImage = "img/" + loot[item].value.name + ".png";
+            case "ARMOUR":
+                bgImage = "url(img/" + loot[item].value.piece + ".png)";
                 output += loot[item].value.piece + "<br>"
                         + loot[item].value.type + "<br>"
                         + loot[item].value.defense;
                 break;
             case "gold":
-                bgImage = "img/gold.png";
+                bgImage = "url(img/gold.png)";
                 output += loot[item].value
                         + " Gold";
                 break;
@@ -123,4 +123,8 @@ function genLoot() {
         id("lootItemContainer").appendChild(div);
     }
     nav.open("loot");
+}
+
+function lootForward() {
+    nav.open("map")
 }

@@ -40,6 +40,7 @@ function renderMap() {
             div.style.backgroundImage = "url(img/map" + map[i][j].content.capitalize() + ".png)";
             map[i][j].layer = i;
             map[i][j].column = j;
+            if (map[i][j].content == "interaction") map[i][j].interaction = "openingScreen" + ((Math.random() * 2 + 1) << 0);
             id("mapContainer").appendChild(div);
             for (var k = 0; k < 3; k++) {
                 img = document.createElement("div");
@@ -60,3 +61,58 @@ function renderMap() {
     }
 }
 
+function cellMoveIsValid(layer, column) {
+    if (!player.cell && layer == 0) return true;
+    else if (player.cell){
+        for (var i = 0; i < player.cell.connections.length; i++) {
+            if ((player.cell.column + player.cell.connections[i]) == column &&
+                 layer == (player.cell.layer + 1)) return true
+        }
+    }
+    return false;
+}
+
+function mapClick(e) {
+    var divId = e.target.id,
+        layer = divId.slice(divId.length-3, divId.indexOf(".")),
+        column = divId.slice(divId.indexOf(".") + 1);
+    if (divId.includes("Img")) return;
+    if (cellMoveIsValid(layer, column)) {
+        player.cell = map[layer][column];
+        console.log(player.cell.layer + ", " + player.cell.column);
+        nav.open(player.cell.content);
+        switch (player.cell.content) {
+            case "interaction":
+                openInteraction(player.cell.interaction);
+                break;
+            case "shop":
+                break;
+            case "inn":
+                nav.open("interaction");
+                openInteraction("inn");
+                break;
+        }
+    }
+}
+
+function mapMouseOverHandler(e) {
+    var divId = e.target.id,
+        layer = divId.slice(7, divId.indexOf(".")),
+        column = divId.slice(divId.indexOf(".") + 1);
+    if (divId.includes("Img")) return;
+    if(cellMoveIsValid(layer, column)) {
+        id("mapCell" + layer + "." + column).style.backgroundImage = "url(img/map" + map[layer][column].content.capitalize() + "Hover.png)";
+    }
+}
+
+function mapMouseOutHandler(e) {
+    var divId = e.target.id,
+        layer = divId.slice(7, divId.indexOf(".")),
+        column = divId.slice(divId.indexOf(".") + 1);
+    if (divId.includes("Img")) return;
+    id("mapCell" + layer + "." + column).style.backgroundImage = "url(img/map" + map[layer][column].content.capitalize() + ".png)";
+}
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};

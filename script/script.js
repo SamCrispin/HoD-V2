@@ -17,7 +17,6 @@ var player = {
         player.health.current += health;
         if (player.health.current > player.health.max) player.health.current = player.health.max;
         else if (player.health.current <= 0) this.die();
-
         id("fightHealthBarPlayer").style.width = ((player.health.current / player.health.max)*100) + "%";
         id("fightHealthLabelPlayer").innerHTML = player.health.current + "/" + player.health.max + "hp";
     },
@@ -53,6 +52,15 @@ var nav = {
     }
 };
 
+function keyDownHandler(e) {
+    var key = e.key;
+    switch (key) {
+        case " ":
+            fight.next();
+            break;
+    }
+}
+
 function id(id) {
     return document.getElementById(id);
 }
@@ -67,11 +75,11 @@ function setupListenersAndAttributes() {
     id("interactionOption4").addEventListener("click", interactionHandler);
     id("interactionOption5").addEventListener("click", interactionHandler);
 
-    //Moves
+    //Fight
     id("fightMoves").addEventListener("mouseover", function() {
         var triggerDiv = event.target,
                 divId = triggerDiv.id.slice(triggerDiv.id.length - 1);
-        id("fightMoveDescription").innerHTML = player.equipped[0].value.moves[divId-1].description;
+        id("fightMoveDescription").innerHTML = player.equipped[5].value.moves[divId-1].description;
     });
     id("fightMoves").addEventListener("mouseout", function() {
         id("fightMoveDescription").innerHTML = "Select a move"
@@ -79,11 +87,13 @@ function setupListenersAndAttributes() {
     id("fightMoves").addEventListener("click", function () {
         var triggerDiv = event.target,
                 moveId = triggerDiv.id.slice(triggerDiv.id.length - 1);
-        fight.attack(player.equipped[0].value.moves[moveId-1]);
+        fight.attack(player.equipped[5].value.moves[moveId-1]);
     });
+    document.addEventListener("keypress", keyDownHandler);
 
     //Loot
     id("lootItemContainer").addEventListener("click", pickupLoot);
+    id("lootForward").addEventListener("click", lootForward);
 
     //Shop
     id("shopEquipmentContainer").addEventListener("click", buyWeapon);

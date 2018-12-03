@@ -14,6 +14,15 @@ function displayMessage(message) {
     id("fightMovesBanner").style.display = "none";
     id("fightMessageBanner").innerHTML = message;
     id("fightMessageBanner").style.display = "block";
+    fight.messageOpen = true;
+}
+
+function displayOpeningFightOptions() {
+    id("fightOpeningBanner").style.display = "block";
+    id("fightMovesBanner").style.display = "none";
+    id ("fightBack").style.display = "none";
+    id ("fightMessageBanner").style.display = "none";
+
 }
 
 function fightBack() {
@@ -29,18 +38,21 @@ var fight = {
     playersTurn: true,
     playerBarrier: false,
     enemyBarrier: false,
+    messageOpen: false,
 
     setupFight: function(enemy, type) {
         nav.open("fight");
         this.enemy = this.genEnemy(enemy, type);
         this.setupMoves();
         id("fightTypeIconEnemy").style.backgroundImage = "url(img/" + this.enemy.type + ".png)";
-        id("fightTypeIconPlayer").style.backgroundImage = "url(img/" + player.equipped[0].type + ".png)";
+        id("fightTypeIconPlayer").style.backgroundImage = "url(img/" + player.equipped[5].value.type + ".png)";
+        id("fightHealthBarPlayer").style.width = ((player.health.current / player.health.max)*100) + "%";
+        id("fightHealthLabelPlayer").innerHTML = player.health.current + "/" + player.health.max + "hp";
     },
 
     setupMoves: function() {
         for (var i = 0; i < 4; i++) {
-            id("fightMove" + (i+1)).innerHTML = player.equipped[0].moves[i].name;
+            id("fightMove" + (i+1)).innerHTML = player.equipped[5].value.moves[i].name;
         }
         id("fightMoveLabelEnemy1").innerHTML = this.enemy.moves[0].name;
         id("fightMoveLabelEnemy2").innerHTML = this.enemy.moves[1].name;
@@ -97,9 +109,9 @@ var fight = {
                 this.enemyBarrier = true;
             } else {
                 damage = (this.enemy.attack / player.defense) * this.enemy.attack;
-                if (effectiveness[move.type][player.equipped[0].type]) {
-                    damage *= effectiveness[move.type][player.equipped[0].type];
-                    if (effectiveness[move.type][player.equipped[0].type] > 1) message += "<br>You were hit and it was super effective!";
+                if (effectiveness[move.type][player.equipped[5].type]) {
+                    damage *= effectiveness[move.type][player.equipped[5].type];
+                    if (effectiveness[move.type][player.equipped[5].type] > 1) message += "<br>You were hit and it was super effective!";
                     else message += "<br>You were hit but it wasn't very effective!";
                 } else {
                     message += "<br>You were hit";
@@ -115,7 +127,6 @@ var fight = {
         }
         this.playersTurn = !this.playersTurn;
         displayMessage(message);
-        if (!this.playersTurn) this.enemyTurn();
     },
 
     enemyTurn: function() {
@@ -125,5 +136,12 @@ var fight = {
 
     victory: function() {
         genLoot();
+    },
+
+    next: function () {
+        if (!fight.messageOpen) return;
+        fight.messageOpen = false;
+        if (!fight.playersTurn) fight.enemyTurn();
+        else displayOpeningFightOptions();
     }
 };

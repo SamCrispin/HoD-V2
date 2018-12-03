@@ -30,7 +30,6 @@ body {
 #bg {
    width: 100%;
    height: 100%;
-   padding: 10% 0 0 0;
 }
 
 .hasHover:hover {
@@ -53,6 +52,64 @@ body {
    margin-right: 10px;
    margin-bottom: 7px;
 }
+
+/*Hud*/
+   #hud {
+      width: 100%;
+      height: 40px;
+      border-bottom: 10px solid white;
+   }
+
+   #hudMap {
+      background-image: url("../img/newMap.png");
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+   }
+
+   #hudInventory {
+      background-image: url("../img/newMap.png");
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      right: 0;
+      top: 0;
+   }
+
+   #hudGold {
+      height: 40px;
+      width: fit-content;
+      line-height: 40px;
+      position: relative;
+      left: 25%;
+   }
+
+   #hudHealth {
+      height: 40px;
+      width: fit-content;
+      line-height: 40px;
+      position: absolute;
+      right: 25%;
+   }
+
+   #hudItemSlots {
+      width: fit-content;
+      height: 30px;
+      background-color: white;
+      position: absolute;
+      left: 50%;
+      top: 5px;
+      margin-left: -50px;
+   }
+
+   .hudItemSlot {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      display: inline-block;
+   }
 
 /*Interaction*/
    .interactionOption {
@@ -292,11 +349,11 @@ body {
       }
 
 /*Loot*/
-   #lootItemContainer {
+   #loot{
       overflow-y: scroll;
    }
 
-   #lootItemContainer::-webkit-scrollbar {
+   #loot::-webkit-scrollbar {
       display: none;
    }
 
@@ -309,6 +366,20 @@ body {
       padding-left: 100px;
       margin-left: 145px;
       margin-bottom: 10px;
+   }
+
+   #lootForward {
+      background-image: url("../img/forwardButton.png");
+      width: 50px;
+      height: 20px;
+      position: fixed;
+      top: 50%;
+      margin-top: -10px;
+      right: 50px;
+   }
+
+   #lootForward:hover {
+      background-image: url("../img/forwardButtonHover.png");
    }
 
 /*Shop*/
@@ -377,8 +448,6 @@ body {
       left: 50%;
       margin-left: -10px;
    }
-
-/*Inn*/
 
 /*Map*/
    #map {
