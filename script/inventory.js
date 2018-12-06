@@ -17,8 +17,8 @@ function pushItemToInventory(item) {
             break;
         case "ITEM":
             if (player.itemSlots.length == 3) return false;
-            var index = player.itemSlots.push(item);
-            id("hudItemSlot" + index).style.backgroundImage = "url(img/" + item.value.bgImage + "Icon.png)";
+            player.itemSlots.push(item);
+            renderItems();
             break;
         case "ARMOUR":
             player.inventory.push(item);
@@ -27,6 +27,15 @@ function pushItemToInventory(item) {
             player.changeGold(item.value);
             break;
     }
+}
+
+function renderItems() {
+    if (player.itemSlots[0]) id("hudItemSlot1").style.backgroundImage = "url(img/" + player.itemSlots[0].value.bgImage + "Icon.png)";
+    else id("hudItemSlot1").style.backgroundImage = "none";
+    if (player.itemSlots[1]) id("hudItemSlot2").style.backgroundImage = "url(img/" + player.itemSlots[1].value.bgImage + "Icon.png)";
+    else id("hudItemSlot2").style.backgroundImage = "none";
+    if (player.itemSlots[2]) id("hudItemSlot3").style.backgroundImage = "url(img/" + player.itemSlots[2].value.bgImage + "Icon.png)";
+    else id("hudItemSlot3").style.backgroundImage = "none";
 }
 
 function populateInventory(type) {
@@ -71,6 +80,12 @@ function equipItem(e) {
     }
     player.inventory.push(inventoryItem);
     populateInventory(item.type);
+}
+
+function useItem(itemId) {
+    if (!player.itemSlots[itemId-1].value.effect()) return;
+    player.itemSlots.splice(itemId-1, 1);
+    renderItems();
 }
 
 function openInventory(e) {

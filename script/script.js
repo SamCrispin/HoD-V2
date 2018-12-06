@@ -23,7 +23,7 @@ var player = {
     },
 
     die: function () {
-
+        fight.battle = false;
     },
 
     changeGold: function (gold) {
@@ -71,6 +71,12 @@ function hudMapMouseOut() {if(canVisitMapOrInvFromLocation[nav.openDiv]) id("hud
 function hudInvClickHandler() {if(canVisitMapOrInvFromLocation[nav.openDiv]) nav.open("player");}
 function hudInvMouseOver() {if(canVisitMapOrInvFromLocation[nav.openDiv]) id("hudInventory").style.backgroundImage = "url(img/inventoryHover.png)";}
 function hudInvMouseOut() {if(canVisitMapOrInvFromLocation[nav.openDiv]) id("hudInventory").style.backgroundImage = "url(img/inventory.png)";}
+
+function itemClickHandler(e) {
+    var divId = e.target.id;
+    if (divId.includes("Slots")) return;
+    if (fight.battle && fight.playersTurn) useItem(divId.slice(divId.length - 1))
+}
 
 function itemRightClickHandler(e) {
     var divId = e.target.id;
@@ -156,6 +162,7 @@ function setupListenersAndAttributes() {
     id("hudInventoryHover").addEventListener("click", hudInvClickHandler);
     id("hudInventoryHover").addEventListener("mouseover", hudInvMouseOver);
     id("hudInventoryHover").addEventListener("mouseout", hudInvMouseOut);
+    id("hudItemSlots").addEventListener("click", itemClickHandler);
     id("hudItemSlots").addEventListener("contextmenu", itemRightClickHandler);
     id("hudItemSlots").addEventListener("mouseout", itemHoverOutHandler);
 

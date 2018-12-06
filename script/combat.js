@@ -39,16 +39,20 @@ var fight = {
     playerBarrier: false,
     enemyBarrier: false,
     messageOpen: false,
+    battle: false,
 
     setupFight: function(enemy, type) {
         nav.open("fight");
-        this.enemy = this.genEnemy(enemy, type);
+        this.enemy = this.genEnemy(enemy[0], type);
         this.setupMoves();
         displayFightOptions();
+        id("fightNameEnemy").innerHTML = enemy[0];
         id("fightTypeIconEnemy").style.backgroundImage = "url(img/" + this.enemy.type + ".png)";
         id("fightTypeIconPlayer").style.backgroundImage = "url(img/" + player.equipped[5].value.type + ".png)";
         id("fightHealthBarPlayer").style.width = ((player.health.current / player.health.max)*100) + "%";
         id("fightHealthLabelPlayer").innerHTML = player.health.current + "/" + player.health.max + "hp";
+        id("fightHealthBarEnemy").style.width = "100%";
+        this.battle = true
     },
 
     setupMoves: function() {
@@ -137,6 +141,7 @@ var fight = {
 
     victory: function() {
         genLoot();
+        this.battle = false;
     },
 
     next: function () {

@@ -118,7 +118,9 @@ var types = {
             description: "This tonic magically makes all your injuries feel just a little bit better, don't question how it does it..." +
             "or what's in it...",
             effect: function() {
-                player.changeHealth(20)
+                if (player.health.current == player.health.max) return false;
+                player.changeHealth(20);
+                return true;
             },
             bgImage: "healthPotion"
         },
@@ -126,8 +128,11 @@ var types = {
         slingshot: {
             name: "Slingshot",
             description: "A crudely made slingshot that looks like you'll only get 1 use out of it, regardless of ammo. Just aim and fire",
-            effect: function(damage) {
-                //deal 'damage' worth of damage
+            effect: function() {
+                fight.enemy.health.current -= 20;
+                id("fightHealthBarEnemy").style.width = ((fight.enemy.health.current / fight.enemy.health.max) * 100) + "%";
+                if (fight.enemy.health.current <= 0) fight.victory();
+                return true;
             },
             bgImage: "slingshot"
         }
