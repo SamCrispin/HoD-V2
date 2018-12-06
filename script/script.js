@@ -19,6 +19,7 @@ var player = {
         else if (player.health.current <= 0) this.die();
         id("fightHealthBarPlayer").style.width = ((player.health.current / player.health.max)*100) + "%";
         id("fightHealthLabelPlayer").innerHTML = player.health.current + "/" + player.health.max + "hp";
+        id("hudHealth").innerHTML = player.health.current + "/" + player.health.max + "hp";
     },
 
     die: function () {
@@ -27,7 +28,18 @@ var player = {
 
     changeGold: function (gold) {
         this.gold += gold;
+        id("hudGold").innerHTML = this.gold + " Gold";
     }
+};
+
+var canVisitMapOrInvFromLocation = {
+    interaction: false,
+    inventory: true,
+    player: true,
+    fight: false,
+    loot: false,
+    shop: true,
+    map: true
 };
 
 var nav = {
@@ -51,6 +63,27 @@ var nav = {
         this.open(divToBeOpened);
     }
 };
+
+function hudMapClickHandler() {if(canVisitMapOrInvFromLocation[nav.openDiv]) nav.open("map");}
+function hudMapMouseOver() {if(canVisitMapOrInvFromLocation[nav.openDiv]) id("hudMap").style.backgroundImage = "url(img/mapHover.png)";}
+function hudMapMouseOut() {if(canVisitMapOrInvFromLocation[nav.openDiv]) id("hudMap").style.backgroundImage = "url(img/map.png)";}
+
+function hudInvClickHandler() {if(canVisitMapOrInvFromLocation[nav.openDiv]) nav.open("player");}
+function hudInvMouseOver() {if(canVisitMapOrInvFromLocation[nav.openDiv]) id("hudInventory").style.backgroundImage = "url(img/inventoryHover.png)";}
+function hudInvMouseOut() {if(canVisitMapOrInvFromLocation[nav.openDiv]) id("hudInventory").style.backgroundImage = "url(img/inventory.png)";}
+
+function itemRightClickHandler(e) {
+    var divId = e.target.id;
+    e.preventDefault();
+    id(divId + "Discard").style.display = "block";
+}
+
+function itemHoverOutHandler(e) {
+    var divId = e.target.id;
+    if (divId == "hudItemSlots" || (e.screenY == 136)) return;
+    if (divId.includes("Discard")) id(divId).style.display = "none";
+    else id(divId + "Discard").style.display = "none";
+}
 
 function keyDownHandler(e) {
     var key = e.key;
@@ -115,6 +148,17 @@ function setupListenersAndAttributes() {
     id("mapContainer").addEventListener("click", mapClick);
     id("mapContainer").addEventListener("mouseover", mapMouseOverHandler);
     id("mapContainer").addEventListener("mouseout", mapMouseOutHandler);
+
+    //Hud
+    id("hudMapHover").addEventListener("click", hudMapClickHandler);
+    id("hudMapHover").addEventListener("mouseover", hudMapMouseOver);
+    id("hudMapHover").addEventListener("mouseout", hudMapMouseOut);
+    id("hudInventoryHover").addEventListener("click", hudInvClickHandler);
+    id("hudInventoryHover").addEventListener("mouseover", hudInvMouseOver);
+    id("hudInventoryHover").addEventListener("mouseout", hudInvMouseOut);
+    id("hudItemSlots").addEventListener("contextmenu", itemRightClickHandler);
+    id("hudItemSlots").addEventListener("mouseout", itemHoverOutHandler);
+
 }
 
 function setup() {

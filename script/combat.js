@@ -1,4 +1,4 @@
-function displayFightOptions() {
+function displayFightMoves() {
     id("fightOpeningBanner").style.display = "none";
     id("fightMovesBanner").style.display = "block";
     id ("fightBack").style.display = "block";
@@ -17,7 +17,7 @@ function displayMessage(message) {
     fight.messageOpen = true;
 }
 
-function displayOpeningFightOptions() {
+function displayFightOptions() {
     id("fightOpeningBanner").style.display = "block";
     id("fightMovesBanner").style.display = "none";
     id ("fightBack").style.display = "none";
@@ -44,6 +44,7 @@ var fight = {
         nav.open("fight");
         this.enemy = this.genEnemy(enemy, type);
         this.setupMoves();
+        displayFightOptions();
         id("fightTypeIconEnemy").style.backgroundImage = "url(img/" + this.enemy.type + ".png)";
         id("fightTypeIconPlayer").style.backgroundImage = "url(img/" + player.equipped[5].value.type + ".png)";
         id("fightHealthBarPlayer").style.width = ((player.health.current / player.health.max)*100) + "%";
@@ -142,6 +143,6 @@ var fight = {
         if (!fight.messageOpen) return;
         fight.messageOpen = false;
         if (!fight.playersTurn) fight.enemyTurn();
-        else displayOpeningFightOptions();
+        else displayFightOptions();
     }
 };

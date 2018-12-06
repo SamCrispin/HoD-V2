@@ -119,7 +119,8 @@ var types = {
             "or what's in it...",
             effect: function() {
                 player.changeHealth(20)
-            }
+            },
+            bgImage: "healthPotion"
         },
 
         slingshot: {
@@ -127,7 +128,8 @@ var types = {
             description: "A crudely made slingshot that looks like you'll only get 1 use out of it, regardless of ammo. Just aim and fire",
             effect: function(damage) {
                 //deal 'damage' worth of damage
-            }
+            },
+            bgImage: "slingshot"
         }
     },
 

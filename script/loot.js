@@ -6,10 +6,11 @@ function Weapon(type, moves, attack) {
     this.attack = attack;
 }
 
-function Item(name, description, effect) {
+function Item(name, description, effect, bgImage) {
     this.name = name;
     this.description = description;
     this.effect = effect;
+    this.bgImage = bgImage
 }
 
 function Armour(type, piece, defense) {
@@ -42,7 +43,7 @@ function genItem() {
     item = items[keys[(Math.random() * keys.length) << 0]];
     return {
         type: "ITEM",
-        value: new Item(item.name, item.description, item.effect)
+        value: new Item(item.name, item.description, item.effect, item.bgImage)
     };
 }
 

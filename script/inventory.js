@@ -18,7 +18,7 @@ function pushItemToInventory(item) {
         case "ITEM":
             if (player.itemSlots.length == 3) return false;
             var index = player.itemSlots.push(item);
-            id("hudItemSlot" + index).style.backgroundImage = "url(img/" + item.value.name.toLowerCase() + ".png)";
+            id("hudItemSlot" + index).style.backgroundImage = "url(img/" + item.value.bgImage + "Icon.png)";
             break;
         case "ARMOUR":
             player.inventory.push(item);

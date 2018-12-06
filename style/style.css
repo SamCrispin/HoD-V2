@@ -61,22 +61,39 @@ body {
    }
 
    #hudMap {
-      background-image: url("../img/newMap.png");
+      background-image: url("../img/map.png");
       width: 150px;
       height: 150px;
       position: absolute;
+   }
+
+   #hudMapHover {
+      width: 100px;
+      height: 100px;
+      position: absolute;
       top: 5px;
-      left: 5px;
+      left: 7px;
+      background: none;
    }
 
    #hudInventory {
-      background-image: url("../img/newMap.png");
+      background-image: url("../img/inventory.png");
       width: 150px;
       height: 150px;
       position: absolute;
       right: 0;
       top: 0;
    }
+
+   #hudInventoryHover {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 6px;
+      right: 5px;
+      background: none;
+   }
+
 
    #hudGold {
       height: 40px;
@@ -109,6 +126,17 @@ body {
       height: 30px;
       position: relative;
       display: inline-block;
+   }
+
+   .hudItemSlotHover {
+      width: 70px;
+      height: 20px;
+      position: relative;
+      left: -20px;
+      top: 30px;
+      border: 5px solid white;
+      border-radius: 5px;
+      display: none;
    }
 
 /*Interaction*/

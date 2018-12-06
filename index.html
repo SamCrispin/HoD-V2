@@ -20,11 +20,19 @@
         <div id="hud">
             <div id="hudHealth">100/100hp</div>
             <div id="hudMap"></div>
+            <div id="hudMapHover"></div>
             <div id="hudInventory"></div>
+            <div id="hudInventoryHover"></div>
             <div id="hudItemSlots">
-                <div class="hudItemSlot" id="hudItemSlot1"></div>
-                <div class="hudItemSlot" id="hudItemSlot2"></div>
-                <div class="hudItemSlot" id="hudItemSlot3"></div>
+                <div class="hudItemSlot" id="hudItemSlot1">
+                    <div class="hudItemSlotHover" id="hudItemSlot1Discard">Discard</div>
+                </div>
+                <div class="hudItemSlot" id="hudItemSlot2">
+                    <div class="hudItemSlotHover" id="hudItemSlot2Discard">Discard</div>
+                </div>
+                <div class="hudItemSlot" id="hudItemSlot3">
+                    <div class="hudItemSlotHover" id="hudItemSlot3Discard">Discard</div>
+                </div>
             </div>
             <div id="hudGold">0 Gold</div>
         </div>
@@ -56,7 +64,7 @@
             <div id="fightBack" onclick="fightBack()"></div>
             <div class="fightBannerBg" id="fightOpeningBanner">
                 <div id="fightOpeningBannerMessage">What will you do?</div>
-                <div class="fightOption hasHover" id="fightOpeningFightOption" onclick="displayFightOptions()">Fight</div>
+                <div class="fightOption hasHover" id="fightOpeningFightOption" onclick="displayFightMoves()">Fight</div>
                 <div class="fightOption hasHover" id="fightOpeningWeaponsOption" onclick="displayWeapons()">Weapons</div>
             </div>
             <div class="fightBannerBg" id="fightMovesBanner">
