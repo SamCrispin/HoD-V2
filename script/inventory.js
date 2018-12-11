@@ -3,6 +3,7 @@ var inventoryItems = [];
 function pickupLoot(e) {
     var triggerDiv = e.target,
         item = loot.splice(triggerDiv.id.slice(triggerDiv.id.length - 1), 1, null)[0];
+    if (triggerDiv.id == "lootItemContainer") return;
     if (!pushItemToInventory(item)) {
         triggerDiv.style.borderColor = "red";
         setTimeout(function() {triggerDiv.style.borderColor = "white";}, 100);
@@ -42,14 +43,15 @@ function populateInventory(type) {
     var item, div, x = 0;
     inventoryItems = [];
     id("inventoryItemContainer").innerHTML = "";
+    id("inventoryMessage").innerHTML = type.capitalize();
     for (var i = 0; i < player.inventory.length; i++) {
         item = player.inventory[i];
-        if (type == "all" || item.type == type || (item.value.piece && item.value.piece == type)) {
+        if (type == "ALL" || item.type == type || (item.value.piece && item.value.piece == type)) {
             inventoryItems.push(item);
             div = document.createElement("div");
             div.className = "item hasHoverBorder";
             div.id = "inventoryItem" + x;
-            div.style.backgroundImage = "url(img/" + ((item.type == "weapon") ? "staff" : item.value.piece) + ".png)";
+            div.style.backgroundImage = "url(img/" + ((item.type == "WEAPON") ? "staff" : item.value.piece) + ".png)";
             id("inventoryItemContainer").appendChild(div);
             x++;
         }
@@ -89,10 +91,11 @@ function useItem(itemId) {
 }
 
 function openInventory(e) {
-    var id = e.target.id,
-        inventory = id.slice(6).toUpperCase();
+    var divId = e.target.id,
+        inventory = divId.slice(6).toUpperCase();
     nav.open("inventory");
     populateInventory(inventory);
+    id("inventoryBack").style.display = "block";
 }
 
 function playerMouseOverHandler(e) {
@@ -104,21 +107,42 @@ function playerMouseOverHandler(e) {
 
 function playerArmourHover(key) {
     var armour = player.equipped[Object.keys(armourPieces).indexOf(key)];
-    id("playerItemHover").innerHTML = armour.value.type + "<br>"
-            + armour.value.defense;
+    id("playerItemStatsMessage").innerHTML = key.capitalize();
+    id("playerItemStatsOutput").innerHTML = "Defense: " + armour.value.defense + "<br>"
+                                          + "Type: " + armour.value.type.capitalize();
+    id("playerItemMoves").innerHTML = "";
 }
 
 function playerWeaponHover() {
-    var weapon = player.equipped[5],
-        output = "Moves:<br>";
-    if (!weapon) return;
+    var moves = "";
+    id("playerItemStatsMessage").innerHTML = "Weapon";
+    id("playerItemStatsOutput").innerHTML = "Attack: " + player.equipped[5].value.attack + "<br>"
+                                      + "Moves:<br>";
     for (var i = 0; i < 4; i++) {
-        output += weapon.value.moves[i].name + "<br>";
+        moves += player.equipped[5].value.moves[i].name + "<br>";
     }
-    output += "Attack: " + weapon.value.attack;
-    id("playerItemHover").innerHTML = output;
+    id("playerItemMoves").innerHTML = moves;
+}
+
+function outputPlayerStats() {
+    var output = "", moves = "";
+    output += "Health: " + player.health.current + "/" + player.health.max + "\n"
+            + "Attack: " + getPlayerAttack() + "\n"
+            + "Defense: " + getPlayerDefense() + "\n"
+            + "Moves: ";
+    id("playerStatsOutput").innerText = output;
+    for (var i = 0; i < 4; i++) {
+        moves += player.equipped[5].value.moves[i].name + "<br>";
+    }
+    id("playerMoves").innerHTML = moves;
 }
 
 function playerMouseOutHandler() {
-    id("playerItemHover").innerHTML = "Hover over an option to get more information";
+    id("playerItemStatsMessage").innerHTML = "Info";
+    id("playerItemStatsOutput").innerText = "Hover over an item for more information";
+    id("playerItemMoves").innerHTML = "";
+}
+
+function inventoryBack() {
+    nav.open("player");
 }

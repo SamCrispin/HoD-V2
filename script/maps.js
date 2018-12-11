@@ -1,4 +1,4 @@
-var map, options = [];
+var map, options = [], numberOfInteractions = 8;
 
 function generateMap() {
     var option = getOptionNo(), nextOption;
@@ -17,7 +17,7 @@ function generateMap() {
             }
         }
     }
-    map.push([{content: "bossFight"}]);
+    map.push([{interaction: "openingScreenBoss", content: "interaction", layer: 16}]);
     renderMap();
 }
 
@@ -40,7 +40,7 @@ function renderMap() {
             div.style.backgroundImage = "url(img/map" + map[i][j].content.capitalize() + ".png)";
             map[i][j].layer = i;
             map[i][j].column = j;
-            if (map[i][j].content == "interaction") map[i][j].interaction = "openingScreen" + ((Math.random() * 2 + 1) << 0);
+            if (map[i][j].content == "interaction") map[i][j].interaction = "openingScreen" + ((Math.random() * numberOfInteractions + 1) << 0);
             id("mapContainer").appendChild(div);
             for (var k = 0; k < 3; k++) {
                 img = document.createElement("div");
@@ -59,10 +59,14 @@ function renderMap() {
             }
         }
     }
+    div = document.createElement("div");
+    div.id = "mapBossFight";
+    id("mapContainer").appendChild(div);
 }
 
 function cellMoveIsValid(layer, column) {
     if (!player.cell && layer == 0) return true;
+    if (player.cell && player.cell.layer == 15) return false;
     else if (player.cell){
         for (var i = 0; i < player.cell.connections.length; i++) {
             if ((player.cell.column + player.cell.connections[i]) == column &&
@@ -75,23 +79,30 @@ function cellMoveIsValid(layer, column) {
 function mapClick(e) {
     var divId = e.target.id,
         layer = divId.slice(divId.length-3, divId.indexOf(".")),
-        column = divId.slice(divId.indexOf(".") + 1);
+        column = divId.slice(divId.indexOf(".") + 1),
+        bossFight = false;
     if (divId.includes("Img")) return;
-    if (cellMoveIsValid(layer, column)) {
-        player.cell = map[layer][column];
-        console.log(player.cell.layer + ", " + player.cell.column);
-        nav.open(player.cell.content);
+    if (divId.includes("Boss") && player.cell && player.cell.layer == 15) bossFight = true;
+    if (cellMoveIsValid(layer, column) || bossFight) {
+        player.cell = (bossFight) ? map[16][0] : map[layer][column];
+        if (player.cell.content != "inn") nav.open(player.cell.content);
+        id("mapCell" + player.cell.layer + "." + player.cell.column).style.backgroundImage = "url(img/map" + player.cell.content.capitalize() + "Complete.png)";
         switch (player.cell.content) {
             case "interaction":
                 openInteraction(player.cell.interaction);
+                player.inShop = false;
                 break;
-            case "shop":
+            case "shopFace":
+                if (!player.inShop) populateShops();
+                player.inShop = true;
                 break;
             case "inn":
                 nav.open("interaction");
                 openInteraction("inn");
+                player.inShop = false;
                 break;
         }
+        player.cell.comlpete = true;
     }
 }
 
@@ -99,7 +110,7 @@ function mapMouseOverHandler(e) {
     var divId = e.target.id,
         layer = divId.slice(7, divId.indexOf(".")),
         column = divId.slice(divId.indexOf(".") + 1);
-    if (divId.includes("Img")) return;
+    if (divId.includes("Img") || divId.includes("Boss")) return;
     if(cellMoveIsValid(layer, column)) {
         id("mapCell" + layer + "." + column).style.backgroundImage = "url(img/map" + map[layer][column].content.capitalize() + "Hover.png)";
     }
@@ -109,10 +120,11 @@ function mapMouseOutHandler(e) {
     var divId = e.target.id,
         layer = divId.slice(7, divId.indexOf(".")),
         column = divId.slice(divId.indexOf(".") + 1);
-    if (divId.includes("Img")) return;
+    if (divId.includes("Img") || divId.includes("Boss")) return;
+    if (map[layer][column].complete) return;
     id("mapCell" + layer + "." + column).style.backgroundImage = "url(img/map" + map[layer][column].content.capitalize() + ".png)";
 }
 
 String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+    return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
 };

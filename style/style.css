@@ -53,6 +53,41 @@ body {
    margin-bottom: 7px;
 }
 
+.backButton {
+   background-image: url("../img/backButton.png");
+   width: 50px;
+   height: 20px;
+   position: absolute;
+   left: -10px;
+   top: -10px;
+   border: 10px solid white;
+   border-radius: 25px 0 25px 0;
+   display: none;
+   z-index: 1;
+}
+
+.backButton:hover {
+   background-image: url("../img/backButtonHover.png");
+}
+
+.forwardButton {
+   background-image: url("../img/forwardButton.png");
+   width: 50px;
+   height: 20px;
+   position: absolute;
+   top: 50%;
+   margin-top: -10px;
+   right: 50px;
+}
+
+.message {
+   width: 100%;
+   text-align: center;
+   font-size: 2em;
+   position: relative;
+   background: none;
+}
+
 /*Hud*/
    #hud {
       width: 100%;
@@ -151,6 +186,9 @@ body {
    }
 
 /*Inventory*/
+   #inventoryMessage {
+      text-transform: capitalize;
+   }
 
 /*Player*/
    .playerOption {
@@ -158,8 +196,8 @@ body {
    }
 
    #playerOption {
-      padding-left: 228px;
-      text-align: initial;
+      position: absolute;
+      left: 238px;
    }
 
    #playerWeapon {
@@ -168,14 +206,16 @@ body {
 
    #playerHelmet {
       background-image: url("../img/HELMET.png");
-   }
-
-   #playerAmulet {
-      background-image: url("../img/AMULET.png");
+      left: 0;
    }
 
    #playerChestpiece {
       background-image: url("../img/CHESTPIECE.png");
+      left: -5px;
+   }
+
+   #playerAmulet {
+      background-image: url("../img/AMULET.png");
    }
 
    #playerLeggings {
@@ -186,11 +226,49 @@ body {
       background-image: url("../img/BOOTS.png");
    }
 
-   #playerItemHover {
-      height: 233px;
+   .playerWideOption {
+      position: relative;
+      width: 350px;
+      height: 55px;
+      border: 5px solid white;
+      top: 5px;
+      left: 5px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 2em;
+      line-height: 55px;
+      text-align: center;
+   }
+
+   #playerAll {
+      top: 10px;
+   }
+
+   #playerStats {
+      height: 215px;
       width: 215px;
       position: absolute;
       top: 15px;
+      left: 15px;
+      border: 5px solid white;
+      border-radius: 10px;
+      padding: 5px;
+      box-sizing: border-box;
+   }
+
+   .playerMoves {
+      padding-left: 20px;
+   }
+
+   #playerStatsMessage {
+      margin-bottom: 5px;
+   }
+
+   #playerItemStats {
+      height: 173px;
+      width: 215px;
+      position: absolute;
+      top: 235px;
       left: 15px;
       border: 5px solid white;
       border-radius: 10px;
@@ -212,22 +290,6 @@ body {
       display: none;
    }
 
-   #fightBack {
-      background-image: url("../img/backButton.png");
-      width: 50px;
-      height: 20px;
-      position: absolute;
-      left: -10px;
-      top: -10px;
-      border: 10px solid white;
-      border-radius: 25px 0 25px 0;
-      display: none;
-   }
-
-   #fightBack:hover {
-      background-image: url("../img/backButtonHover.png");
-   }
-
    /*Opening banner*/
       #fightOpeningBanner {
          display: block;
@@ -242,6 +304,8 @@ body {
          z-index: 1;
          border-radius: 0 0 0 25px;
          text-align: center;
+         line-height: 90px;
+         font-size: 1.5em;
       }
 
       .fightOption {
@@ -253,11 +317,21 @@ body {
 
       #fightOpeningFightOption {
          left: 400px;
+         background-image: url("../img/fightIcon.png");
+      }
+
+      #fightOpeningFightOption:hover {
+         background-image: url("../img/fightIconHover.png");
       }
 
       #fightOpeningWeaponsOption {
          left: 510px;
          border-radius: 0 0 25px 0;
+         background-image: url("../img/staff.png");
+      }
+
+      #fightOpeningWeaponsOption:hover {
+         background-image: url("../img/staffHover.png");
       }
 
    /*Moves banner*/
@@ -270,6 +344,12 @@ body {
          padding: 5px;
          display: inline-block;
          box-sizing: border-box;
+         line-height: 33px;
+         text-align: center;
+      }
+
+      .fightMove:hover {
+         color: yellow;
       }
 
       #fightMove2 {
@@ -305,6 +385,23 @@ body {
          left: -10px;
          border-top: 10px solid white;
          width: 620px;
+      }
+
+   /*Weapons banner*/
+      #fightWeaponsBanner {
+         border: none;
+         border-top: 10px solid white;
+         width: 100%;
+         background: none;
+      }
+
+      .fightWeapon {
+         margin-right: 10px;
+         top: 10px;
+         left: 10px;
+         height: 70px;
+         width: 70px;
+         background-image: url("../img/staffIcon.png");
       }
 
    /*Player/Enemy Info*/
@@ -388,22 +485,12 @@ body {
    .lootItem {
       background: no-repeat left;
       height: 100px;
-      width: 200px;
+      width: 250px;
       border: 5px solid white;
       border-radius: 5px;
       padding-left: 100px;
-      margin-left: 145px;
+      margin-left: 120px;
       margin-bottom: 10px;
-   }
-
-   #lootForward {
-      background-image: url("../img/forwardButton.png");
-      width: 50px;
-      height: 20px;
-      position: fixed;
-      top: 50%;
-      margin-top: -10px;
-      right: 50px;
    }
 
    #lootForward:hover {
@@ -411,12 +498,41 @@ body {
    }
 
 /*Shop*/
-   #shopWelcome {
-      width: 100%;
+   #shopFaceWelcome {
+      top: 5px;
+   }
+
+   .shopFaceLabel {
+      top: 260px;
+      position: absolute;
+      width: 110px;
       text-align: center;
-      font-size: 2em;
-      position: relative;
-      top: -5px;
+   }
+
+   #shopFaceArmour {
+      background-image: url("../img/CHESTPIECE.png");
+      left: 25%;
+      margin-left: -20px;
+      top: 150px;
+      position: absolute;
+   }
+
+   #shopFaceArmourLabel {
+      left: 25%;
+      margin-left: -20px;
+   }
+
+   #shopFaceWeapons {
+      background-image: url("../img/staff.png");
+      left: 75%;
+      margin-left: -80px;
+      top: 150px;
+      position: absolute;
+   }
+
+   #shopFaceWeaponsLabel {
+      left: 75%;
+      margin-left: -80px
    }
 
    .shopPrice {
@@ -496,4 +612,57 @@ body {
       width: 40px;
       height: 40px;
       position: absolute;
+   }
+
+   #mapBossFight {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      left: 50%;
+      margin-left: -50px;
+      top: 1300px;
+      background-image: url("../img/bossFightIcon.png");
+   }
+
+   #mapKey {
+      height: 300px;
+      width: 200px;
+      position: absolute;
+      left: 50%;
+      margin-left: 370px;
+      top: 50%;
+      margin-top: -150px;
+      border: 10px solid white;
+      border-radius: 20px;
+      display: none;
+   }
+
+   #mapKeyTitle {
+      background: none;
+      margin-bottom: 10px;
+   }
+
+   .mapKeyEntry {
+      height: 40px;
+      width: 85%;
+      line-height: 40px;
+      padding-left: 20px;
+      margin-bottom: 20px;
+      background: right no-repeat;
+   }
+
+   #mapKeyInteraction {
+      background-image: url("../img/mapInteraction.png");
+   }
+
+   #mapKeyInn {
+      background-image: url("../img/mapInn.png");
+   }
+
+   #mapKeyShop {
+      background-image: url("../img/mapShopFace.png");
+   }
+
+   #mapKeyBoss {
+      background-image: url("../img/mapBoss.png");
    }

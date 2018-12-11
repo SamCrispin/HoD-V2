@@ -8,6 +8,7 @@ function displayWeapons() {
     id("fightOpeningBanner").style.display = "none";
     id("fightWeaponsBanner").style.display = "block";
     id ("fightBack").style.display = "block";
+    getWeapons();
 }
 
 function displayMessage(message) {
@@ -33,7 +34,6 @@ function fightBack() {
 }
 
 var fight = {
-
     enemy: null,
     playersTurn: true,
     playerBarrier: false,
@@ -41,18 +41,34 @@ var fight = {
     messageOpen: false,
     battle: false,
 
-    setupFight: function(enemy, type) {
+    setupFight: function(parameters) {
+        var health, attack, defense, bossMoves, type;
         nav.open("fight");
-        this.enemy = this.genEnemy(enemy[0], type);
+
+        if (player.cell.layer == 16) {
+            health = (Math.random() * 30 + 30) << 0;
+            attack = (Math.random() * 20 + 5) << 0;
+            defense = (Math.random() * 10 + 5) << 0;
+            bossMoves = [];
+
+            type = (parameters[1]) ? parameters[1] : getRandomType();
+            bossMoves.push(moves[type][0]);
+            bossMoves.push(moves[getRandomType(type)][0]);
+            bossMoves.push(moves["BARRIER"][0]);
+            this.enemy = new Enemy(parameters[0], type, health, attack, defense, bossMoves)
+        } else {
+            this.enemy = this.genEnemy(parameters[0], parameters[1]);
+        }
         this.setupMoves();
         displayFightOptions();
-        id("fightNameEnemy").innerHTML = enemy[0];
+        id("fightNameEnemy").innerHTML = parameters[0];
         id("fightTypeIconEnemy").style.backgroundImage = "url(img/" + this.enemy.type + ".png)";
         id("fightTypeIconPlayer").style.backgroundImage = "url(img/" + player.equipped[5].value.type + ".png)";
         id("fightHealthBarPlayer").style.width = ((player.health.current / player.health.max)*100) + "%";
         id("fightHealthLabelPlayer").innerHTML = player.health.current + "/" + player.health.max + "hp";
         id("fightHealthBarEnemy").style.width = "100%";
-        this.battle = true
+        this.battle = true;
+        this.playersTurn = true;
     },
 
     setupMoves: function() {
@@ -64,9 +80,9 @@ var fight = {
     },
 
     genEnemy: function(name, type) {
-        var health = (Math.random() * 20 + 30) << 0,
-            attack = (Math.random() * 5 + 5) << 0,
-            defense = (Math.random() * 5 + 5) << 0,
+        var health = (Math.random() * 30 + 30) << 0,
+            attack = (Math.random() * 20 + 5) << 0,
+            defense = (Math.random() * 10 + 5) << 0,
             thisMoves = [];
 
         type = (type) ? type : getRandomType();
@@ -87,7 +103,7 @@ var fight = {
                 }
                 this.playerBarrier = true;
             } else {
-                damage = (player.attack / this.enemy.defense) * player.attack;
+                damage = (getPlayerAttack() / this.enemy.defense) * getPlayerAttack();
                 if (effectiveness[move.type][this.enemy.type]) {
                     damage *= effectiveness[move.type][this.enemy.type];
                     if (effectiveness[move.type][this.enemy.type] > 1) message += "<br>You hit and it was super effective!";
@@ -113,7 +129,7 @@ var fight = {
                 }
                 this.enemyBarrier = true;
             } else {
-                damage = (this.enemy.attack / player.defense) * this.enemy.attack;
+                damage = (this.enemy.attack / getPlayerDefense()) * this.enemy.attack;
                 if (effectiveness[move.type][player.equipped[5].type]) {
                     damage *= effectiveness[move.type][player.equipped[5].type];
                     if (effectiveness[move.type][player.equipped[5].type] > 1) message += "<br>You were hit and it was super effective!";
@@ -140,7 +156,11 @@ var fight = {
     },
 
     victory: function() {
-        genLoot();
+        if (player.cell.layer != 16) genLoot();
+        else {
+            openInteraction("victory1");
+            nav.open("interaction")
+        }
         this.battle = false;
     },
 
@@ -151,3 +171,27 @@ var fight = {
         else displayFightOptions();
     }
 };
+
+function getPlayerAttack() {
+    return player.attack + player.equipped[5].value.attack;
+}
+
+function getPlayerDefense() {
+    var defense = 0;
+    for (var i = 0; i < 5; i++) {
+        defense += player.equipped[i].value.defense;
+    }
+    return defense;
+}
+
+function getWeapons() {
+    var div;
+    for (var i = 0; i < player.inventory.length; i++) {
+        if (player.inventory[i].type == "WEAPON") {
+            div = document.createElement("div");
+            div.className = "item fightWeapon";
+            div.id = "fightWeapon" + i;
+            id("fightWeaponsBanner").appendChild(div);
+        }
+    }
+}

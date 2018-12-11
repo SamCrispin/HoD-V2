@@ -1,22 +1,24 @@
 var loot;
 
-function Weapon(type, moves, attack) {
+function Weapon(type, moves, attack, bgImage) {
     this.type = type;
     this.moves = moves;
     this.attack = attack;
+    this.bgImage = bgImage;
 }
 
 function Item(name, description, effect, bgImage) {
     this.name = name;
     this.description = description;
     this.effect = effect;
-    this.bgImage = bgImage
+    this.bgImage = bgImage;
 }
 
-function Armour(type, piece, defense) {
+function Armour(type, piece, defense, bgImage) {
     this.type = type;
     this.piece = piece;
     this.defense = defense;
+    this.bgImage = bgImage;
 }
 
 function genWeapon() {
@@ -34,7 +36,7 @@ function genWeapon() {
     thisMoves.push(moves["BARRIER"][0]);
     return {
         type: "WEAPON",
-        value: new Weapon(type, thisMoves, attack)
+        value: new Weapon(type, thisMoves, attack, "staff")
     }
 }
 
@@ -50,10 +52,10 @@ function genItem() {
 function genArmour() {
     var type = getRandomType(),
         piece = getRandomArmourPiece(),
-        defense = (Math.random() * 5 + 5) << 0;
+        defense = (Math.random() * 3 + 5) << 0;
     return {
         type: "ARMOUR",
-        value: new Armour(type, piece, defense)
+        value: new Armour(type, piece, defense, piece)
     }
 }
 
@@ -79,6 +81,7 @@ function getRandomArmourPiece() {
 
 function genLoot() {
     loot = [];
+    id("lootItemContainer").innerHTML = "";
 
     loot.push(genWeapon());
     if (Math.random() < 0.5) loot.push(genItem());
@@ -100,7 +103,7 @@ function genLoot() {
                         + loot[item].value.attack;
                 break;
             case "ITEM":
-                bgImage = "url(img/" + loot[item].value.name.toLowerCase() + ".png)";
+                bgImage = "url(img/" + loot[item].value.bgImage + ".png)";
                 output += loot[item].value.name + "<br>"
                         + loot[item].value.description;
                 break;

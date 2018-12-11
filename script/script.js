@@ -11,6 +11,7 @@ var player = {
     inventory: [],
     equipped: [],
     cell: null,
+    inShop: false,
 
     changeHealth: function (health) {
         if (this.health.current == this.health.max && health > 0) return false;
@@ -33,7 +34,7 @@ var player = {
 };
 
 var canVisitMapOrInvFromLocation = {
-    interaction: false,
+    interaction: true,
     inventory: true,
     player: true,
     fight: false,
@@ -49,11 +50,14 @@ var nav = {
     open: function(divIdToBeOpened) {
         if (this.openDiv) this.close(this.openDiv);
         id(divIdToBeOpened).style.display = "block";
+        if (divIdToBeOpened == "map") id("mapKey").style.display = "block";
+        if (divIdToBeOpened == "player") outputPlayerStats();
         this.openDiv = divIdToBeOpened;
     },
 
     close: function(divIdToBeClosed) {
         id(divIdToBeClosed).style.display = "none";
+        if (divIdToBeClosed == "map") id("mapKey").style.display = "none";
         this.lastOpenDiv = divIdToBeClosed;
     },
 
@@ -63,6 +67,19 @@ var nav = {
         this.open(divToBeOpened);
     }
 };
+
+function calculateScaler() {
+    return ((player.cell.layer+1) / 16) * 100;
+}
+
+function stayNight() {
+    if (player.gold >= 100) {
+        player.changeGold(-100);
+        openInteraction("innStayed")
+    } else {
+        openInteraction("innNotStayed");
+    }
+}
 
 function hudMapClickHandler() {if(canVisitMapOrInvFromLocation[nav.openDiv]) nav.open("map");}
 function hudMapMouseOver() {if(canVisitMapOrInvFromLocation[nav.openDiv]) id("hudMap").style.backgroundImage = "url(img/mapHover.png)";}
@@ -81,7 +98,8 @@ function itemClickHandler(e) {
 function itemRightClickHandler(e) {
     var divId = e.target.id;
     e.preventDefault();
-    id(divId + "Discard").style.display = "block";
+    player.itemSlots.splice(divId.slice(divId.length-1)-1, 1);
+    renderItems();
 }
 
 function itemHoverOutHandler(e) {
@@ -142,6 +160,10 @@ function setupListenersAndAttributes() {
     id("shopItemContainer").addEventListener("mouseover", shopItemMouseOverHandler);
     id("shopItemContainer").addEventListener("mouseout", shopMouseOutHandler);
 
+    //Shop face
+    id("shopFaceWeapons").addEventListener("click", openWeaponsShop);
+    id("shopFaceArmour").addEventListener("click", openArmourShop);
+
     //Inventory
     id("inventoryItemContainer").addEventListener("click", equipItem);
 
@@ -169,15 +191,17 @@ function setupListenersAndAttributes() {
 }
 
 function setup() {
-    nav.open("map");
+    nav.open("interaction");
+    openInteraction("startingScreen1");
     generateMap();
-    player.equipped[0] = {type: "ARMOUR", value: new Armour(types.ARCANE, armourPieces.HELMET, 5)};
-    player.equipped[1] = {type: "ARMOUR", value: new Armour(types.ICE, armourPieces.AMULET, 5)};
-    player.equipped[2] = {type: "ARMOUR", value: new Armour(types.ELECTRIC, armourPieces.CHESTPIECE, 5)};
-    player.equipped[3] = {type: "ARMOUR", value: new Armour(types.FIRE, armourPieces.LEGGINGS, 5)};
-    player.equipped[4] = {type: "ARMOUR", value: new Armour(types.WATER, armourPieces.BOOTS, 5)};
+    player.equipped[0] = {type: "ARMOUR", value: new Armour(getRandomType(), armourPieces.HELMET, 5)};
+    player.equipped[1] = {type: "ARMOUR", value: new Armour(getRandomType(), armourPieces.AMULET, 5)};
+    player.equipped[2] = {type: "ARMOUR", value: new Armour(getRandomType(), armourPieces.CHESTPIECE, 5)};
+    player.equipped[3] = {type: "ARMOUR", value: new Armour(getRandomType(), armourPieces.LEGGINGS, 5)};
+    player.equipped[4] = {type: "ARMOUR", value: new Armour(getRandomType(), armourPieces.BOOTS, 5)};
     player.equipped[5] = genWeapon();
     setupListenersAndAttributes();
+    playerMouseOutHandler();
 }
 
 window.onload = setup;

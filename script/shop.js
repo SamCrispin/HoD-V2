@@ -1,15 +1,46 @@
-var shopEquipment = [], shopItems = [];
+var shopWeapons = [], shopArmour = [], weaponShopItems = [], armourShopItems = [], shopType = false;
 
-function populateShop(type) {
-    var div, equipment, item, cost;
+function populateShops() {
+    var weapon, armour, cost;
+    shopWeapons = [];
+    shopArmour = [];
+    weaponShopItems = [];
+    armourShopItems = [];
     for (var i = 0; i < 5; i++) {
-        equipment = (type == "Weapon") ? genWeapon() : genArmour();
-        equipment.value.cost = ((Math.random()*10 +45)<<0);
-        shopEquipment.push(equipment);
+        weapon = genWeapon();
+        weapon.value.cost = ((Math.random()*10 +45)<<0);
+        shopWeapons.push(weapon);
+
+        armour = genArmour();
+        armour.value.cost = ((Math.random()*10 +45)<<0);
+        shopArmour.push(armour);
+    }
+
+    for (i = 0; i < 6; i++) {
+        weaponShopItems.push(genItem());
+        armourShopItems.push(genItem());
+    }
+}
+
+function renderShop() {
+    var div, equipment, items;
+
+    id("shopEquipmentContainer").innerHTML = "";
+    id("shopItemContainer").innerHTML = "";
+
+    if (shopType == "Weapon") {
+        equipment = shopWeapons;
+        items = weaponShopItems;
+    } else {
+        equipment = shopArmour;
+        items = armourShopItems;
+    }
+
+    for (var i = 0; i < 5; i++) {
         div = document.createElement("div");
         div.className = "item hasHoverBorder";
-        div.id = "shop" + type + i;
-        div.style.backgroundImage = "url(img/" + equipment.value.type + ".png)";
+        div.id = "shop" + shopType + i;
+        div.style.backgroundImage = "url(img/" + equipment[i].value.bgImage + ".png)";
         id("shopEquipmentContainer").appendChild(div);
     }
 
@@ -17,16 +48,15 @@ function populateShop(type) {
         div = document.createElement("div");
         div.className = "shopPrice";
         div.id = "shopPrice" + i;
-        div.innerHTML = shopEquipment[i].value.cost + " gold";
+        div.innerHTML = equipment[i].value.cost + " gold";
         id("shopEquipmentContainer").appendChild(div);
     }
 
     for (i = 0; i < 6; i++) {
-        item = genItem();
-        shopItems.push(item);
         div = document.createElement("div");
         div.className = "shopItem hasHoverBorder";
         div.id = "shopItem" + i;
+        div.style.backgroundImage = "url(img/" + items[i].value.bgImage + ".png)";
         id("shopItemContainer").appendChild(div);
     }
 }
@@ -34,14 +64,14 @@ function populateShop(type) {
 function buyWeapon(e) {
     var triggerDiv = e.target,
         weaponNo = triggerDiv.id.slice(triggerDiv.id.length - 1),
-        weapon = shopEquipment[weaponNo];
+        weapon = shopWeapons[weaponNo];
     if (weapon && player.gold >= weapon.value.cost) {
-        player.gold -= weapon.value.cost;
+        player.changeGold(weapon.value.cost);
         id("shopWeapon" + weaponNo).style.backgroundImage = "url(img/sold)";
         id("shopWeapon" + weaponNo).classList.remove("hasHoverBorder");
         id("shopPrice" + weaponNo).innerHTML = "Sold";
         pushItemToInventory(weapon);
-        shopEquipment.splice(weaponNo, 1, null);
+        shopWeapons.splice(weaponNo, 1, null);
     } else if (weapon) {
         id("shopWeapon" + weaponNo).style.borderColor = "red";
         setTimeout(function() {id("shopWeapon" + weaponNo).style.borderColor = "white";}, 100);
@@ -51,13 +81,14 @@ function buyWeapon(e) {
 function buyItem(e) {
     var triggerDiv = e.target,
         itemNo = triggerDiv.id.slice(triggerDiv.id.length - 1),
-        item = shopItems[itemNo];
+        items = (shopType == "Weapons") ? weaponShopItems : armourShopItems,
+        item = items[itemNo];
     if (item && player.gold >= 25) {
-        player.gold -= 25;
+        player.changeGold(25);
         id("shopItem" + itemNo).style.backgroundImage = "url(img/sold)";
         id("shopItem" + itemNo).classList.remove("hasHoverBorder");
         pushItemToInventory(item);
-        shopItems.splice(itemNo, 1, null);
+        items.splice(itemNo, 1, null);
     } else if (item) {
         id("shopItem" + itemNo).style.borderColor = "red";
         setTimeout(function() {id("shopItem" + itemNo).style.borderColor = "white";}, 100);
@@ -72,14 +103,14 @@ function shopEquipmentMouseOverHandler(e) {
 
 function armourHover(e) {
     var triggerDiv = e.target,
-            armour = shopEquipment[triggerDiv.id.slice(triggerDiv.id.length - 1)];
+        armour = shopArmour[triggerDiv.id.slice(triggerDiv.id.length - 1)];
     id("shopItemDescription").innerHTML = armour.value.type + "<br>"
                                         + armour.value.defense;
 }
 
 function weaponHover(e) {
     var triggerDiv = e.target,
-        weapon = shopEquipment[triggerDiv.id.slice(triggerDiv.id.length - 1)],
+        weapon = shopWeapons[triggerDiv.id.slice(triggerDiv.id.length - 1)],
         output = "Moves:<br>";
     if (!weapon) return;
     for (var i = 0; i < 4; i++) {
@@ -91,7 +122,8 @@ function weaponHover(e) {
 
 function shopItemMouseOverHandler(e) {
     var triggerDiv = e.target,
-        item = shopItems[triggerDiv.id.slice(triggerDiv.id.length - 1)],
+        items = (shopType == "Weapons") ? weaponShopItems : armourShopItems,
+        item = items[triggerDiv.id.slice(triggerDiv.id.length - 1)],
         output = "";
     if (!item) return;
     output += item.value.name + ":<br>"
@@ -101,4 +133,27 @@ function shopItemMouseOverHandler(e) {
 
 function shopMouseOutHandler() {
     id("shopItemDescription").innerHTML = "Hover over an item to get more information";
+}
+
+function openWeaponsShop() {
+    nav.open("shop");
+    shopType = "Weapon";
+    renderShop();
+    id("shopBack").style.display = "block";
+}
+
+function openArmourShop() {
+    nav.open("shop");
+    shopType = "Armour";
+    renderShop();
+    id("shopBack").style.display = "block";
+}
+
+function shopBack() {
+    nav.back();
+    id("shopBack").style.display = "none";
+}
+
+function shopForward() {
+    nav.open("map");
 }

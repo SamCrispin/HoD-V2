@@ -48,7 +48,7 @@ var mapSections = {
                     content: null
                 },
                 {   //NODE 4
-                    content: "shop",
+                    content: "shopFace",
                     connections: [-1]
                 }
             ],
@@ -105,7 +105,7 @@ var mapSections = {
             ],
             [   //LAYER 3
                 {   //NODE 1
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0]
                 },
                 {   //NODE 2
@@ -176,7 +176,7 @@ var mapSections = {
                     connections: [0]
                 },
                 {   //NODE 2
-                    content: "shop",
+                    content: "shopFace",
                     connections: [-1, 1]
                 },
                 {   //NODE 3
@@ -302,7 +302,7 @@ var mapSections = {
                     connections: [-1]
                 },
                 {   //NODE 4
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0]
                 }
             ],
@@ -311,7 +311,7 @@ var mapSections = {
                     content: null
                 },
                 {   //NODE 2
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0]
                 },
                 {   //NODE 3
@@ -363,7 +363,7 @@ var mapSections = {
                     connections: [0]
                 },
                 {   //NODE 3
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0]
                 },
                 {   //NODE 4
@@ -439,7 +439,7 @@ var mapSections = {
                     content: null
                 },
                 {   //NODE 2
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0, 1]
                 },
                 {   //NODE 3
@@ -507,7 +507,7 @@ var mapSections = {
                     connections: [0]
                 },
                 {   //NODE 3
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0, 1]
                 },
                 {   //NODE 4
@@ -552,7 +552,7 @@ var mapSections = {
             ],
             [   //LAYER 2
                 {   //NODE 1
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0]
                 },
                 {   //NODE 2
@@ -689,7 +689,7 @@ var mapSections = {
                     content: null
                 },
                 {   //NODE 3
-                    content: "shop",
+                    content: "shopFace",
                     connections: [-1]
                 },
                 {   //NODE 4
@@ -758,7 +758,7 @@ var mapSections = {
                     content: null
                 },
                 {   //NODE 4
-                    content: "shop",
+                    content: "shopFace",
                     connections: [-1]
                 }
             ],
@@ -894,7 +894,7 @@ var mapSections = {
             ],
             [   //LAYER 3
                 {   //NODE 1
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0]
                 },
                 {   //NODE 2
@@ -969,7 +969,7 @@ var mapSections = {
                     content: null
                 },
                 {   //NODE 4
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0]
                 }
             ],
@@ -1030,7 +1030,7 @@ var mapSections = {
                     connections: [-1]
                 },
                 {   //NODE 3
-                    content: "shop",
+                    content: "shopFace",
                     connections: [1]
                 },
                 {   //NODE 4
@@ -1077,7 +1077,7 @@ var mapSections = {
                     content: null
                 },
                 {   //NODE 2
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0, 1]
                 },
                 {   //NODE 3
@@ -1158,7 +1158,7 @@ var mapSections = {
                     connections: [1]
                 },
                 {   //NODE 2
-                    content: "shop",
+                    content: "shopFace",
                     connections: [1]
                 },
                 {   //NODE 3
@@ -1226,7 +1226,7 @@ var mapSections = {
                     content: null
                 },
                 {   //NODE 3
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0]
                 },
                 {   //NODE 4
@@ -1292,7 +1292,7 @@ var mapSections = {
                     connections: [0]
                 },
                 {   //NODE 3
-                    content: "shop",
+                    content: "shopFace",
                     connections: [0]
                 },
                 {   //NODE 4

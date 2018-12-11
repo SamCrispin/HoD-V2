@@ -34,7 +34,7 @@
                     <div class="hudItemSlotHover" id="hudItemSlot3Discard">Discard</div>
                 </div>
             </div>
-            <div id="hudGold">0 Gold</div>
+            <div id="hudGold">100 Gold</div>
         </div>
         <div id="interaction" class="outputDiv">
             <div id="interactionOutput">Output</div>
@@ -45,36 +45,47 @@
             <div class="interactionOption" id="interactionOption5"></div>
         </div>
         <div id="inventory" class="outputDiv">
-            <div id="inventoryMessage"></div>
+            <div id="inventoryBack" class="backButton" onclick="inventoryBack()"></div>
+            <div id="inventoryMessage" class="message"></div>
             <div id="inventoryItemContainer"></div>
         </div>
         <div id="player" class="outputDiv">
             <div id="playerOption">
                 <div class="item playerOption hasHoverBorder" id="playerWeapon"></div>
                 <div class="item playerOption hasHoverBorder" id="playerHelmet"></div>
-                <div class="item playerOption hasHoverBorder" id="playerAmulet"></div>
                 <div class="item playerOption hasHoverBorder" id="playerChestpiece"></div>
+                <div class="item playerOption hasHoverBorder" id="playerAmulet"></div>
                 <div class="item playerOption hasHoverBorder" id="playerLeggings"></div>
                 <div class="item playerOption hasHoverBorder" id="playerBoots"></div>
-                <div class="hasHoverBorder" id="playerAll"></div>
+                <div class="playerWideOption hasHoverBorder" id="playerArmour">Armour</div>
+                <div class="playerWideOption hasHoverBorder" id="playerAll">Inventory</div>
             </div>
-            <div class="playerOption hasHoverBorder" id="playerItemHover">Hover over an option to get more information</div>
+            <div id="playerStats">
+                <div id="playerStatsMessage" class="message">Player</div>
+                <div id="playerStatsOutput"></div>
+                <div id="playerMoves" class="playerMoves"></div>
+            </div>
+            <div id="playerItemStats">
+                <div id="playerItemStatsMessage" class="message"></div>
+                <div id="playerItemStatsOutput"></div>
+                <div id="playerItemMoves" class="playerMoves"></div>
+            </div>
         </div>
         <div id="fight" class="outputDiv">
-            <div id="fightBack" onclick="fightBack()"></div>
+            <div id="fightBack" class="backButton" onclick="fightBack()"></div>
             <div class="fightBannerBg" id="fightOpeningBanner">
                 <div id="fightOpeningBannerMessage">What will you do?</div>
-                <div class="fightOption hasHover" id="fightOpeningFightOption" onclick="displayFightMoves()">Fight</div>
-                <div class="fightOption hasHover" id="fightOpeningWeaponsOption" onclick="displayWeapons()">Weapons</div>
+                <div class="fightOption" id="fightOpeningFightOption" onclick="displayFightMoves()"></div>
+                <div class="fightOption" id="fightOpeningWeaponsOption" onclick="displayWeapons()"></div>
             </div>
             <div class="fightBannerBg" id="fightMovesBanner">
                 <div id="fightMoves">
-                    <div class="fightMove hasHover" id="fightMove1">1</div>
-                    <div class="fightMove hasHover" id="fightMove2">2</div>
-                    <div class="fightMove hasHover" id="fightMove3">3</div>
-                    <div class="fightMove hasHover" id="fightMove4">4</div>
+                    <div class="fightMove" id="fightMove1"></div>
+                    <div class="fightMove" id="fightMove2"></div>
+                    <div class="fightMove" id="fightMove3"></div>
+                    <div class="fightMove" id="fightMove4"></div>
                 </div>
-                <div id="fightMoveDescription">Desc</div>
+                <div id="fightMoveDescription">Select a move</div>
             </div>
             <div class="fightBannerBg" id="fightWeaponsBanner"></div>
             <div class="fightBannerBg" id="fightMessageBanner"></div>
@@ -97,11 +108,21 @@
             </div>
         </div>
         <div id="loot" class="outputDiv">
+            <div id="lootMessage" class="message">Loot!</div>
             <div id="lootItemContainer"></div>
-            <div id="lootForward"></div>
+            <div id="lootForward" class="forwardButton"></div>
+        </div>
+        <div id="shopFace" class="outputDiv">
+            <div id="shopFaceWelcome" class="message">What shop would you like?</div>
+            <div id="shopFaceWeapons" class="item hasHoverBorder"></div>
+            <div id="shopFaceWeaponsLabel" class="shopFaceLabel">Weapons</div>
+            <div id="shopFaceArmour" class="item hasHoverBorder"></div>
+            <div id="shopFaceArmourLabel" class="shopFaceLabel">Armour</div>
+            <div id="shopFaceForward" class="forwardButton" onclick="shopForward()"></div>
         </div>
         <div id="shop" class="outputDiv">
-            <div id="shopWelcome">Welcome to the shop</div>
+            <div class="message">Welcome to the shop</div>
+            <div id="shopBack" class="backButton" onclick="shopBack()"></div>
             <div id="shopEquipmentContainer"></div>
             <div id="shopItemContainer"></div>
             <div id="shopItemDescription"></div>
@@ -110,6 +131,13 @@
         </div>
         <div id="map" class="outputDiv">
             <div id="mapContainer"></div>
+        </div>
+        <div id="mapKey">
+            <div id="mapKeyTitle" class="message">Key</div>
+            <div id="mapKeyInteraction" class="mapKeyEntry">Interaction</div>
+            <div id="mapKeyShop" class="mapKeyEntry">Shop</div>
+            <div id="mapKeyInn" class="mapKeyEntry">Inn</div>
+            <div id="mapKeyBoss" class="mapKeyEntry">Boss</div>
         </div>
     </div>
 </body>
